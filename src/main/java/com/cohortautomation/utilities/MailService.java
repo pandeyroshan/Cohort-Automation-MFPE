@@ -10,6 +10,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.cohortautomation.beans.Meeting;
+import com.cohortautomation.beans.SurveyResponse;
 import com.cohortautomation.beans.User;
 
 public class MailService {
@@ -58,6 +60,14 @@ public class MailService {
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
+	}
+	
+	public static void sendMeetingAlert(Meeting meeting) {
+		// this function will send the meeting alerts
+	}
+	
+	public static void sendSurveyResponse(SurveyResponse surveyResponse) {
+		// this function will send the survey response filled by a user
 	}
 
 	public static void main(String[] args) {

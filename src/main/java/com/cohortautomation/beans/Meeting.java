@@ -8,15 +8,17 @@ public class Meeting {
 	private String meetingURL;
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
+	private Cohort cohort;
 
 	public Meeting(String meetingName, String meetingAgenda, String meetingURL, LocalDateTime startDateTime,
-			LocalDateTime endDateTime) {
+			LocalDateTime endDateTime, Cohort cohort) {
 		super();
 		this.meetingName = meetingName;
 		this.meetingAgenda = meetingAgenda;
 		this.meetingURL = meetingURL;
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
+		this.cohort = cohort;
 	}
 
 	public String getMeetingName() {
@@ -59,4 +61,19 @@ public class Meeting {
 		this.endDateTime = endDateTime;
 	}
 
+	public Cohort getCohort() {
+		return cohort;
+	}
+
+	public void setCohort(Cohort cohort) {
+		this.cohort = cohort;
+	}
+
+	@Override
+	public String toString() {
+		return "Meeting [meetingName=" + meetingName + ", meetingAgenda=" + meetingAgenda + ", meetingURL=" + meetingURL
+				+ ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime + ", cohort=" + cohort + "]";
+	}
+	
+	
 }
