@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page import="com.cohortautomation.beans.User" language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
@@ -15,9 +15,14 @@
 
     <title>Cohort Automation</title>
   </head>
+  <style>
+  	#blink {
+            transition: 0.1s;
+        }
+  </style>
   <body style="font-family: 'Nunito Sans', sans-serif;">
 
-  	<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg p-2 mb-5 rounded">
+  	<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg p-2 mb-3 rounded">
 	  <div class="container-fluid">
 	    <a class="navbar-brand" href="#">Cohort Automation</a>
 	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -32,7 +37,7 @@
 	          <a class="nav-link active" href="#">Notifications<sup>&#x1F534;</sup></a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link active" href="#">Change Password</a>
+	          <a class="nav-link active" href="/change-password">Change Password</a>
 	        </li>
 	        <li class="nav-item">
 	          <a class="nav-link active" href="/logout">Logout</a>
@@ -41,6 +46,17 @@
 	    </div>
 	  </div>
 	</nav>
+	<%
+		User user = (User) session.getAttribute("user");
+		
+		if(!user.isAdmin()){
+			out.print("<div class=\"text-end\">");
+			out.print("<p>Cohort Code: ${user.getCohort().getName() }</p>");
+			out.print("</div>");
+		} else {
+			out.print("<br>");
+		}
+	%>
 
 	<div class="row mx-auto">
 
@@ -89,11 +105,18 @@
 	  </div>
 	  
 	</div>
-
-	<br>
+	<%
+		if(user.isFirstLogin()){
+			out.print("<p id=\"blink\" class=\"mt-4 text-center text-danger\">Please change your password for security reasons.</p>");
+		} else {
+			out.print("<br>");
+		}
+	%>
 	<div class="container-fluid">
-		<button class="btn btn-primary btn-sm">Mark me Present</button>
-		<button class="btn btn-primary btn-sm">Create Meetings</button>
+		<div class="text-end">
+			<button class="btn btn-primary btn-sm">Mark me Present</button>
+			<button class="btn btn-primary btn-sm">Create Meetings</button>
+		</div>
 
 		<div class="card mt-4 shadow-lg">
 		  <div class="card-header text-center">
@@ -141,7 +164,7 @@
 		  </div>
 		</div>
 
-		<div class="card mt-4">
+		<div class="card mt-4 mb-4">
 		  <div class="card-header text-center">
 		    Surveys
 		  </div>
@@ -186,6 +209,8 @@
 			</table>
 		  </div>
 		</div>
+		
+		<p class="text-end">Last Login: ${user.getLastLogin() }</p>
 	</div>
 
 	<footer class="bg-light text-center text-lg-start">
@@ -198,8 +223,13 @@
     <script type = "text/javascript" >  
 	    function preventBack() { window.history.forward(); }  
 	    setTimeout("preventBack()", 0);  
-	    window.onunload = function () { null };  
-	</script> 
+	    window.onunload = function () { null }; 
+	    
+	    var blink = document.getElementById('blink');
+        setInterval(function() {
+            blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
+        }, 500); 
+	</script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>

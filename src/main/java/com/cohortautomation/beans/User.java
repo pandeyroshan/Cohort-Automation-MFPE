@@ -18,6 +18,8 @@ public class User {
 	private LocalDateTime lastLogin;
 	private String lastIP;
 	private boolean isFirstLogin;
+	private Cohort cohort;
+	private boolean isAdmin;
 
 	public User(int employeeId, String username, String password, String firstName, String lastName,
 			String personalEmail) {
@@ -150,13 +152,31 @@ public class User {
 		this.isFirstLogin = isFirstLogin;
 	}
 
+	public Cohort getCohort() {
+		return cohort;
+	}
+
+	public void setCohort(Cohort cohort) {
+		this.cohort = cohort;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	@Override
 	public String toString() {
 		return "User [employeeId=" + employeeId + ", username=" + username + ", password=" + password + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", personalEmail=" + personalEmail + ", corporateEmail="
 				+ corporateEmail + ", isMentor=" + isMentor + ", isSME=" + isSME + ", isTrainer=" + isTrainer
 				+ ", isCoach=" + isCoach + ", isMember=" + isMember + ", lastLogin=" + lastLogin + ", lastIP=" + lastIP
-				+ ", isFirstLogin=" + isFirstLogin + "]";
+				+ ", isFirstLogin=" + isFirstLogin + ", cohort=" + cohort + ", isAdmin=" + isAdmin + "]";
 	}
+	
+	
 
 }

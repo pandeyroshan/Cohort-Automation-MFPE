@@ -33,8 +33,11 @@ public class AuthenticationController {
 			boolean checkIfFirstLogin = UserDAO.isFirstLogin(user);
 
 			session.setAttribute("user", user);
+			
+			System.out.println(user);
 
 			if (checkIfFirstLogin) {
+				System.out.println("First Login\n\n\n");
 				session.setAttribute("message", "You haven't changed your password yet, Please change it.");
 			}
 			return "redirect:/";
@@ -45,7 +48,55 @@ public class AuthenticationController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		UserDAO.updateLastLogin(user);
 		session.invalidate();
 		return "redirect:/login";
+	}
+	
+	@RequestMapping(value="/change-password", method=RequestMethod.GET)
+	public String showChangePasswordPage(HttpSession session) {
+		return "changePassword";
+	}
+	
+	@RequestMapping(value="/change-password", method=RequestMethod.POST)
+	public String showChangePasswordPage(@RequestParam Map<String, String> requestData, HttpSession session) {
+		String oldPassword = requestData.get("oldPassword");
+		String newPassword = requestData.get("newPassword");
+		String confirmNewPassword = requestData.get("confirmNewPassword");
+		String keepLoggedIn = requestData.get("keepMeLoggedIn");
+		
+		if(newPassword.equals(confirmNewPassword)) {
+			User user = (User) session.getAttribute("user");
+			System.out.println("CP: "+user);
+			boolean validate = UserDAO.validate(user.getUsername(), oldPassword);
+			
+			if(validate) {
+				UserDAO.updatePassword(user, newPassword);
+				
+				if(keepLoggedIn == null) {
+					session.invalidate();
+					return "redirect:/login";
+				} else {
+					session.removeAttribute("message");
+					user.setFirstLogin(false);
+					
+					session.removeAttribute("user");
+					session.setAttribute("user", user);
+					
+					UserDAO.uncheckIsFirstLogin(user);
+
+				    return "redirect:/";
+				}
+			} else {
+				// old password mismatch
+				System.out.println("\n\n\nMISMATCH\n\n\n");
+				session.setAttribute("oldPasswordErrorMessage", "Please provide correct old password.");
+			}
+		} else {
+			// confirm password not same
+		}
+		
+		return "redirect:/change-password";
 	}
 }

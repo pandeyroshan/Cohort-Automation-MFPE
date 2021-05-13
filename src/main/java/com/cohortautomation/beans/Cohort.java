@@ -14,15 +14,12 @@ public class Cohort {
 	private User SME;
 	private List<LearningPath> learningPath;
 
-	public Cohort(String name, String description, Date startdate, int totalWeeks, User coach, User mentor, User sME) {
+	public Cohort(String name, String description, Date startdate, int totalWeeks) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.startdate = startdate;
 		this.totalWeeks = totalWeeks;
-		this.coach = coach;
-		this.mentor = mentor;
-		this.SME = sME;
 		this.learningPath = new ArrayList<LearningPath>();
 	}
 
