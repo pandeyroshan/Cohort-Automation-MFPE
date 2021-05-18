@@ -6,14 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.cohortautomation.utilities.UserPermissions;
+
 @Controller
 public class HomepageController {
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String showHomepage(HttpSession session) {
-		if(session.getAttribute("user")==null) {
-			return "redirect:/login";
+		if (UserPermissions.isAuthenticated(session)) {
+			return UserPermissions.getDashboardByRole(session);
+		} else {
+			return "redirect:login";
 		}
-		return "homepage";
 	}
 }
