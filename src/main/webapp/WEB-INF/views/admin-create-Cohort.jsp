@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,7 +11,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <title>Admin Dashboard - Create Coach</title>
+    <title>Admin - Create Cohort</title>
     <style>
       body {
         font-family: "Lato", sans-serif;
@@ -129,13 +130,13 @@
 
       <div class="text-left pl-5 pt-3 pr-5">
         <p class="myNavLink" onclick="location.href='/'">Homepage</p>
-        <p class="myNavLink" onclick="location.href='/all-cohort'">Cohorts</p>
+        <p class="myNavLink" onclick="location.href='/all-cohort'"><strong>Cohorts</strong></p>
         <p class="myNavLink" onclick="location.href='/all-sme'">SMEs</p>
         <p class="myNavLink" onclick="location.href='/all-mentor'">Mentors</p>
-        <p class="myNavLink" onclick="location.href='/all-coach'"><strong>Coaches</strong></p>
+        <p class="myNavLink" onclick="location.href='/all-coach'">Coaches</p>
         <p class="myNavLink" onclick="location.href='/all-trainer'">Trainer</p>
         <hr>
-        <p class="myNavLink" onclick="location.href='/admin-change-password'">Change Password</p>
+        <p class="myNavLink">Change Password</p>
         <p class="myNavLink">My Profile</p>
       </div>
 
@@ -146,40 +147,83 @@
 
     <div class="main px-4">
       <div class="text-right mt-2 mr-2">
-        <span style="font-size: 15px" class="mr-2">Welcome ${user.getUsername() }</span>
+        <span style="font-size: 15px" class="mr-2">Welcome admin</span>
         <a href="/logout"><img src="/resources/img/logout.png" class="mt-1" style="width: 15px; height: 15px;"></a>
       </div>
       
       <!-- Breadcrumb -->
       <small class="font-weight-light text-secondary">
         <span style="font-size: 15px;">
-          <a href="/all-coach">Coach</a> /
+          <a href="/">Home</a> /
         </span>
         <span style="font-size: 15px;">
-          Create Coach
+          <a href="/all-cohort">cohort</a> /
+        </span>
+        <span style="font-size: 15px;">
+          create cohort
         </span>
       </small>
       
       <div class="p-5 mt-3" style="background-color: #C4C4C4;">
-          <form method="post">
-              <label for="exampleInputEmail1" style="font-size: 15px;">Employee ID</label>
-              <input type="number" class="form-control" name="empID" placeholder="Enter Employee ID" required>
+                <form method="post">
+                    <label style="font-size: 15px;">Cohort Code</label>
+                    <input type="text" class="form-control" name="cohortCode" placeholder="Provide a cohort Code">
+                    
+                    <label style="font-size: 15px;">Cohort Description</label>
+                    <input type="text" class="form-control" name="cohortDesc" placeholder="Provide a cohort Description ex - Advance Java Track">
 
-              <label for="exampleInputEmail1" style="font-size: 15px;">First Name</label>
-              <input type="text" class="form-control" name="fname" placeholder="Enter First Name" required>
+                    <label style="font-size: 15px;">Start Date</label>
+                    <input type="date" class="form-control" name="startDate">
 
-              <label for="exampleInputEmail1" style="font-size: 15px;">Last Name</label>
-              <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" required>
+                    <label style="font-size: 15px;">Total Weeks</label>
+                    <input type="number" class="form-control" name="totalWeeks" placeholder="Provide number of weeks">
 
-              <label for="exampleInputEmail1" style="font-size: 15px;">Email</label>
-              <input type="email" class="form-control" name="email" placeholder="Enter Email address" required>
-              
-              <div class="text-right mt-3">
-                  <button type="submit" class="btn btn-primary">Create Coach</button>
-              </div>
-          </form>
-      </div>
+                    <label for="exampleInputEmail1" style="font-size: 15px;">Trainer</label>
+                    <div class="d-flex">
+                        <select class="form-control" name="trainerID">
+                        <c:forEach var="trainer" items="${allTrainer}">
+                          <option value="${trainer.getUsername() }">${trainer.getFullName()}</option>
+                        </c:forEach>
+                        </select>
+                        <a href="/create-trainer"><button type="button" class="btn btn-primary ml-1" style="white-space: nowrap; text-align: center;">Create New</button></a>
+                    </div>
 
+                    <label for="exampleInputEmail1" style="font-size: 15px;">Coach</label>
+                    <div class="d-flex">
+                        <select class="form-control" name="coachID">
+                          <c:forEach var="coach" items="${allCoach}">
+                          	<option value="${coach.getUsername() }">${coach.getFullName()}</option>
+                          </c:forEach>
+                        </select>
+                        <a href="/create-coach"><button type="button" class="btn btn-primary ml-1" style="white-space: nowrap; text-align: center;">Create New</button></a>
+                    </div>
+
+                    <label for="exampleInputEmail1" style="font-size: 15px;">Mentor</label>
+                    <div class="d-flex">
+                        <select class="form-control" name="mentorID">
+                          <c:forEach var="mentor" items="${allMentor}">
+                          	<option value="${mentor.getUsername() }">${mentor.getFullName()}</option>
+                          </c:forEach>
+                        </select>
+                        <a href="/create-mentor"><button type="button" class="btn btn-primary ml-1" style="white-space: nowrap; text-align: center;">Create New</button></a>
+                    </div>
+
+                    <label for="exampleInputEmail1" style="font-size: 15px;">SMEs</label>
+                    <div class="d-flex">
+                        <select class="form-control" name="smeID">
+                          <c:forEach var="sme" items="${allSME}">
+                          	<option value="${sme.getUsername() }">${sme.getFullName()}</option>
+                          </c:forEach>
+                        </select>
+                        <a href="/create-sme"><button type="button" class="btn btn-primary ml-1" style="white-space: nowrap; text-align: center;">Create New</button></a>
+                    </div>
+                    <hr>
+                    <div class="text-right mt-3">
+                        <button type="submit" class="btn btn-success">Create Cohort</button>
+                    </div>
+                </form>
+            </div>
+	
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

@@ -1,6 +1,7 @@
 package com.cohortautomation.beans;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class User {
 	private int employeeId;
@@ -18,7 +19,7 @@ public class User {
 	private LocalDateTime lastLogin;
 	private String lastIP;
 	private boolean isFirstLogin;
-	private Cohort cohort;
+	private List<Cohort> myCohorts;
 	private boolean isAdmin;
 
 	public User(int employeeId, String username, String password, String firstName, String lastName,
@@ -152,12 +153,12 @@ public class User {
 		this.isFirstLogin = isFirstLogin;
 	}
 
-	public Cohort getCohort() {
-		return cohort;
+	public List<Cohort> getMyCohorts() {
+		return myCohorts;
 	}
 
-	public void setCohort(Cohort cohort) {
-		this.cohort = cohort;
+	public void setMyCohorts(List<Cohort> myCohorts) {
+		this.myCohorts = myCohorts;
 	}
 
 	public boolean isAdmin() {
@@ -168,15 +169,17 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 
+	public String getFullName() {
+		return this.firstName + " " + this.lastName;
+	}
+
 	@Override
 	public String toString() {
 		return "User [employeeId=" + employeeId + ", username=" + username + ", password=" + password + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", personalEmail=" + personalEmail + ", corporateEmail="
 				+ corporateEmail + ", isMentor=" + isMentor + ", isSME=" + isSME + ", isTrainer=" + isTrainer
 				+ ", isCoach=" + isCoach + ", isMember=" + isMember + ", lastLogin=" + lastLogin + ", lastIP=" + lastIP
-				+ ", isFirstLogin=" + isFirstLogin + ", cohort=" + cohort + ", isAdmin=" + isAdmin + "]";
+				+ ", isFirstLogin=" + isFirstLogin + ", myCohorts=" + myCohorts + ", isAdmin=" + isAdmin + "]";
 	}
-	
-	
 
 }

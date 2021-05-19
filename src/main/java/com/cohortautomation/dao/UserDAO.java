@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.beans.User;
 import com.cohortautomation.utilities.MailService;
 
@@ -41,14 +44,19 @@ public class UserDAO {
 				user.setTrainer(result.getInt(11) == 0 ? false : true);
 				user.setCoach(result.getInt(12) == 0 ? false : true);
 				user.setMember(result.getInt(13) == 0 ? false : true);
-				user.setLastLogin(result.getTimestamp(14).toLocalDateTime());
+				try {
+					user.setLastLogin(result.getTimestamp(14).toLocalDateTime());
+				} catch (Exception e) {
+					user.setLastLogin(null);
+				}
 				user.setLastIP(result.getString(15));
 				user.setFirstLogin(result.getInt(16) == 0 ? false : true);
 
 				if (result.getInt(13) == 1) {
-					// which means if user is a member than set their Cohort ( NA if user is SME,
-					// Trainer, Admin, Mentor, Coach )
-					user.setCohort(CohortDAO.getCohort(result.getString(17)));
+					Cohort cohort = CohortDAO.getCohort(result.getString(17));
+					List<Cohort> myCohort = new ArrayList<Cohort>();
+					myCohort.add(cohort);
+					user.setMyCohorts(myCohort);
 				}
 				user.setAdmin(result.getInt(18) == 0 ? false : true);
 
@@ -115,7 +123,8 @@ public class UserDAO {
 
 	public static boolean createUser(User user) {
 		try {
-			PreparedStatement stmt = con.prepareStatement("insert into user (employee_id, username, password, first_name, last_name, personal_email, corporate_email, is_mentor, is_SME, is_trainer, is_coach, is_member, is_first_login , is_admin) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement stmt = con.prepareStatement(
+					"insert into user (employee_id, username, password, first_name, last_name, personal_email, corporate_email, is_mentor, is_SME, is_trainer, is_coach, is_member, is_first_login , is_admin) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			stmt.setInt(1, user.getEmployeeId());
 			stmt.setString(2, user.getUsername());
 			stmt.setString(3, user.getPassword());
@@ -130,17 +139,17 @@ public class UserDAO {
 			stmt.setBoolean(12, user.isMember());
 			stmt.setBoolean(13, true);
 			stmt.setBoolean(14, user.isAdmin());
-			
+
 			int result = stmt.executeUpdate();
-			
-			if(result>0) {
+
+			if (result > 0) {
 				MailService.sendCredentials(user);
 				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
@@ -160,5 +169,88 @@ public class UserDAO {
 		}
 
 		return false;
+	}
+
+	public static List<User> getAllSME() {
+		List<User> smeList = new ArrayList<User>();
+
+		try {
+			PreparedStatement stmt = con.prepareStatement("select * from user where is_SME = 1");
+			ResultSet result = stmt.executeQuery();
+
+			while (result.next()) {
+				User user = new User(result.getInt(2), result.getString(3), result.getString(4), result.getString(5),
+						result.getString(6), result.getString(7));
+				user.setMyCohorts(CohortDAO.getAllCohortsForSME(user));
+				smeList.add(user);
+			}
+			return smeList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static List<User> getAllMentor() {
+		List<User> mentorList = new ArrayList<User>();
+
+		try {
+			PreparedStatement stmt = con.prepareStatement("select * from user where is_mentor = 1");
+			ResultSet result = stmt.executeQuery();
+
+			while (result.next()) {
+				User user = new User(result.getInt(2), result.getString(3), result.getString(4), result.getString(5),
+						result.getString(6), result.getString(7));
+				user.setMyCohorts(CohortDAO.getAllCohortsForMentor(user));
+
+				mentorList.add(user);
+			}
+			return mentorList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static List<User> getAllCoach() {
+		List<User> coachList = new ArrayList<User>();
+
+		try {
+			PreparedStatement stmt = con.prepareStatement("select * from user where is_coach = 1");
+			ResultSet result = stmt.executeQuery();
+
+			while (result.next()) {
+				User user = new User(result.getInt(2), result.getString(3), result.getString(4), result.getString(5),
+						result.getString(6), result.getString(7));
+				user.setMyCohorts(CohortDAO.getAllCohortsForCoach(user));
+
+				coachList.add(user);
+			}
+			return coachList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static List<User> getAllTrainer() {
+		List<User> trainerList = new ArrayList<User>();
+
+		try {
+			PreparedStatement stmt = con.prepareStatement("select * from user where is_trainer = 1");
+			ResultSet result = stmt.executeQuery();
+
+			while (result.next()) {
+				User user = new User(result.getInt(2), result.getString(3), result.getString(4), result.getString(5),
+						result.getString(6), result.getString(7));
+				user.setMyCohorts(CohortDAO.getAllCohortsForTrainer(user));
+
+				trainerList.add(user);
+			}
+			return trainerList;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

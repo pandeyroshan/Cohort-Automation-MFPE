@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -153,12 +154,14 @@
       <p class="cohort-label ml-3" style="font-size: 20px">Cohorts</p>
       <div class="container-fluid py-2">
         <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
-
-            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-              <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">John Doe</p>
-              <button class="btn btn-success btn-sm mb-3">view cohort</button>
-            </div>
+			
+			<c:forEach var="cohort" items="${allCohort}">
+	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
+	              <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
+	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getName() }</p>
+	              <button class="btn btn-success btn-sm mb-3">view cohort</button>
+	            </div>
+            </c:forEach>
 
         </div>
       </div>
@@ -167,11 +170,13 @@
       <div class="container-fluid py-2">
         <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
 
+		<c:forEach var="user" items="${allSME}">
             <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
               <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">John Doe</p>
+              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
               <button class="btn btn-success btn-sm mb-3">view profile</button>
             </div>
+        </c:forEach>
 
         </div>
       </div>
@@ -179,13 +184,14 @@
       <p class="cohort-label ml-3" style="font-size: 20px">Mentors</p>
       <div class="container-fluid py-2">
         <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
-
+		  
+		  <c:forEach var="user" items="${allMentor}">
             <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
               <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">John Doe</p>
+              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
               <button class="btn btn-success btn-sm mb-3">view profile</button>
             </div>
-
+		  </c:forEach>
         </div>
       </div>
 
@@ -193,11 +199,13 @@
       <div class="container-fluid py-2">
         <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
 
+		  <c:forEach var="user" items="${allCoach}">
             <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
               <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">John Doe</p>
+              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
               <button class="btn btn-success btn-sm mb-3">view profile</button>
             </div>
+          </c:forEach>
 
         </div>
       </div>
@@ -205,18 +213,19 @@
       <p class="cohort-label ml-3" style="font-size: 20px">Trainers</p>
       <div class="container-fluid py-2">
         <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
-
+		  <c:forEach var="user" items="${allTrainer}">
             <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
               <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">John Doe</p>
+              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
               <button class="btn btn-success btn-sm mb-3">view profile</button>
             </div>
-
+		  </c:forEach>
         </div>
       </div>
 
-
-    </div>
+	  <div class="text-right">
+	  	<p class="font-weight-light" style="font-size:15px;">Last Login: ${user.getLastLogin() }</p>
+	  </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

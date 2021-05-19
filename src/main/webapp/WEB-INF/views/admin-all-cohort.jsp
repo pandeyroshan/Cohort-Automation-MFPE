@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -133,15 +134,17 @@
             </small>
             
             <div class="text-right mr-3">
-                <button class="btn btn-success btn-sm">Create Cohort</button>
+                <a href="/create-cohort"><button class="btn btn-success btn-sm">Create Cohort</button></a>
             </div>
             <div class="row mt-4 ml-3">
-              
-              <div class="pt-3 px-3 mr-3 mt-2 bg-secondary text-center rounded">
-                <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
-                <p style="font-size: 15px;" class="text-center mt-2">INTADM21AJ021</p>
-                <button class="btn btn-success btn-sm mb-3">view cohort</button>
-              </div>
+             	
+              <c:forEach var="cohort" items="${allCohorts}">
+					<div class="pt-3 px-3 mr-3 mt-2 bg-secondary text-center rounded">
+	                  <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
+	                  <p style="font-size: 15px;" class="text-center mt-2">${cohort.getName()}</p>
+	                  <button class="btn btn-success btn-sm mb-3">view Cohort</button>
+	                </div>
+		      </c:forEach>
 
             </div>
         </div>

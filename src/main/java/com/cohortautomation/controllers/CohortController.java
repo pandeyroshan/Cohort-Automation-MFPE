@@ -8,8 +8,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CohortController {
 	
-	@RequestMapping("/all-cohort")
-	public String showAllCohort(HttpSession session) {
-		return "admin-all-cohort";
-	}
 }

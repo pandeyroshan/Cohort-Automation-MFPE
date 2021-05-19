@@ -1,7 +1,8 @@
 package com.cohortautomation.controllers;
 
-import com.cohortautomation.dao.UserDAO;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,35 +11,123 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.beans.User;
+import com.cohortautomation.dao.CohortDAO;
+import com.cohortautomation.dao.UserDAO;
 import com.cohortautomation.utilities.PasswordGenerator;
 
 @Controller
 public class AdminController {
 
+	@RequestMapping("/all-cohort")
+	public ModelAndView showAllCohort(HttpSession session) {
+		ModelAndView model = new ModelAndView("admin-all-cohort");
+		model.addObject("allCohorts", CohortDAO.getAllCohorts());
+		return model;
+	}
+
+	@RequestMapping("/create-cohort")
+	public ModelAndView showCreateCohortPage(HttpSession session) {
+		ModelAndView model = new ModelAndView("admin-create-Cohort");
+		model.addObject("allSME", UserDAO.getAllSME());
+		model.addObject("allMentor", UserDAO.getAllMentor());
+		model.addObject("allCoach", UserDAO.getAllCoach());
+		model.addObject("allTrainer", UserDAO.getAllTrainer());
+		return model;
+	}
+
+	@RequestMapping(value = "/create-cohort", method = RequestMethod.POST)
+	public String createCohort(@RequestParam Map<String, String> request, HttpSession session) {
+//		{cohortCode=INTADM21AJ022, startDate=2000-02-11, totalWeeks=12, trainerID=909003, coachID=909002, mentorID=909005, smeID=909100}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String cohortCode = request.get("cohortCode");
+		Date startDate = null;
+		String cohortDesc = request.get("cohortDesc");
+		try {
+			startDate = sdf.parse(request.get("startDate"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int totalWeeks = Integer.parseInt(request.get("totalWeeks"));
+		int trainerID = Integer.parseInt(request.get("trainerID"));
+		int coachID = Integer.parseInt(request.get("coachID"));
+		int mentorID = Integer.parseInt(request.get("mentorID"));
+		int smeID = Integer.parseInt(request.get("smeID"));
+		
+		Cohort cohort = new Cohort(cohortCode, cohortDesc, startDate, totalWeeks);
+
+		User SME = UserDAO.getUser(String.valueOf(smeID));
+		User mentor = UserDAO.getUser(String.valueOf(mentorID));
+		User coach = UserDAO.getUser(String.valueOf(coachID));
+		User trainer = UserDAO.getUser(String.valueOf(trainerID));
+		
+		cohort.setTrainer(trainer);
+		cohort.setCoach(coach);
+		cohort.setMentor(mentor);
+		cohort.setSME(SME);
+		
+		CohortDAO.createCohort(cohort);
+		
+		return "redirect:/all-cohort";
+	}
+
 	@RequestMapping(value = "/all-sme", method = RequestMethod.GET)
-	public String showAllSME(HttpSession session) {
-		return "admin-all-SME";
+	public ModelAndView showAllSME(HttpSession session) {
+		ModelAndView model = new ModelAndView("admin-all-SME");
+		model.addObject("allSME", UserDAO.getAllSME());
+		return model;
 	}
 
 	@RequestMapping(value = "/all-mentor", method = RequestMethod.GET)
-	public String showAllMentor(HttpSession session) {
-		return "admin-all-Mentors";
+	public ModelAndView showAllMentor(HttpSession session) {
+		ModelAndView model = new ModelAndView("admin-all-Mentors");
+		model.addObject("allMentor", UserDAO.getAllMentor());
+		return model;
 	}
 
 	@RequestMapping(value = "/all-trainer", method = RequestMethod.GET)
-	public String showAllTrainer(HttpSession session) {
-		return "admin-all-Trainer";
+	public ModelAndView showAllTrainer(HttpSession session) {
+		ModelAndView model = new ModelAndView("admin-all-Trainer");
+		model.addObject("allTrainer", UserDAO.getAllTrainer());
+		return model;
 	}
 
 	@RequestMapping(value = "/all-coach", method = RequestMethod.GET)
-	public String showAllCoach(HttpSession session) {
-		return "admin-all-Coach";
+	public ModelAndView showAllCoach(HttpSession session) {
+		ModelAndView model = new ModelAndView("admin-all-Coach");
+		model.addObject("allCoach", UserDAO.getAllCoach());
+		return model;
 	}
 
 	@RequestMapping(value = "/create-trainer", method = RequestMethod.GET)
 	public String showCreateTrainerPage() {
+		return "admin-create-Trainer";
+	}
+
+	@RequestMapping(value = "/create-trainer", method = RequestMethod.POST)
+	public String createTraine(@RequestParam Map<String, String> request, HttpSession session) {
+		int employeeID = Integer.parseInt(request.get("empID"));
+		String firstName = request.get("fname");
+		String lastName = request.get("lname");
+		String email = request.get("email");
+
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+				lastName, email);
+
+		user.setSME(false);
+		user.setAdmin(false);
+		user.setMember(false);
+		user.setMentor(false);
+		user.setCoach(false);
+		user.setTrainer(true);
+
+		UserDAO.createUser(user);
+
 		return "admin-create-Trainer";
 	}
 
@@ -47,8 +136,52 @@ public class AdminController {
 		return "admin-create-Coach";
 	}
 
+	@RequestMapping(value = "/create-coach", method = RequestMethod.POST)
+	public String createCoach(@RequestParam Map<String, String> request, HttpSession session) {
+		int employeeID = Integer.parseInt(request.get("empID"));
+		String firstName = request.get("fname");
+		String lastName = request.get("lname");
+		String email = request.get("email");
+
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+				lastName, email);
+
+		user.setSME(false);
+		user.setAdmin(false);
+		user.setMember(false);
+		user.setMentor(false);
+		user.setCoach(true);
+		user.setTrainer(false);
+
+		UserDAO.createUser(user);
+
+		return "admin-create-Coach";
+	}
+
 	@RequestMapping(value = "/create-mentor", method = RequestMethod.GET)
 	public String showCreateMentorPage() {
+		return "admin-create-Mentor";
+	}
+
+	@RequestMapping(value = "/create-mentor", method = RequestMethod.POST)
+	public String createMentor(@RequestParam Map<String, String> request, HttpSession session) {
+		int employeeID = Integer.parseInt(request.get("empID"));
+		String firstName = request.get("fname");
+		String lastName = request.get("lname");
+		String email = request.get("email");
+
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+				lastName, email);
+
+		user.setSME(false);
+		user.setAdmin(false);
+		user.setMember(false);
+		user.setMentor(true);
+		user.setCoach(false);
+		user.setTrainer(false);
+
+		UserDAO.createUser(user);
+
 		return "admin-create-Mentor";
 	}
 
@@ -56,30 +189,32 @@ public class AdminController {
 	public String showCreateSMEPage() {
 		return "admin-create-SME";
 	}
-	
+
 	@RequestMapping(value = "/create-sme", method = RequestMethod.POST)
 	public String createSME(@RequestParam Map<String, String> request, HttpSession session) {
 		int employeeID = Integer.parseInt(request.get("empID"));
 		String firstName = request.get("fname");
 		String lastName = request.get("lname");
 		String email = request.get("email");
-		
-		User user = new User(employeeID, String.valueOf(employeeID),PasswordGenerator.getRandomPassword(8) ,firstName, lastName, email);
-		
+
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+				lastName, email);
+
 		user.setSME(true);
 		user.setAdmin(false);
 		user.setMember(false);
 		user.setMentor(false);
 		user.setCoach(false);
 		user.setTrainer(false);
-		
+
 		UserDAO.createUser(user);
-		
+
 		return "admin-create-SME";
 	}
-	
+
 	@RequestMapping(value = "/admin-change-password", method = RequestMethod.GET)
-	public String showChangePasswordPage() {
-		return "admin-change-password";
+	public ModelAndView showChangePasswordPage(HttpSession session) {
+		ModelAndView model = new ModelAndView("admin-change-password");
+		return model;
 	}
 }

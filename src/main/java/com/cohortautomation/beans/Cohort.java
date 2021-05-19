@@ -12,6 +12,7 @@ public class Cohort {
 	private User coach;
 	private User mentor;
 	private User SME;
+	private User trainer;
 	private List<LearningPath> learningPath;
 
 	public Cohort(String name, String description, Date startdate, int totalWeeks) {
@@ -85,6 +86,14 @@ public class Cohort {
 
 	public void setLearningPath(List<LearningPath> learningPath) {
 		this.learningPath = learningPath;
+	}
+
+	public User getTrainer() {
+		return trainer;
+	}
+
+	public void setTrainer(User trainer) {
+		this.trainer = trainer;
 	}
 
 	@Override
