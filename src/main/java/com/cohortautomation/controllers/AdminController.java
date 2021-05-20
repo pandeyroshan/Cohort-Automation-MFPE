@@ -41,10 +41,9 @@ public class AdminController {
 
 	@RequestMapping(value = "/create-cohort", method = RequestMethod.POST)
 	public String createCohort(@RequestParam Map<String, String> request, HttpSession session) {
-//		{cohortCode=INTADM21AJ022, startDate=2000-02-11, totalWeeks=12, trainerID=909003, coachID=909002, mentorID=909005, smeID=909100}
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		String cohortCode = request.get("cohortCode");
 		Date startDate = null;
 		String cohortDesc = request.get("cohortDesc");
@@ -58,21 +57,21 @@ public class AdminController {
 		int coachID = Integer.parseInt(request.get("coachID"));
 		int mentorID = Integer.parseInt(request.get("mentorID"));
 		int smeID = Integer.parseInt(request.get("smeID"));
-		
+
 		Cohort cohort = new Cohort(cohortCode, cohortDesc, startDate, totalWeeks);
 
 		User SME = UserDAO.getUser(String.valueOf(smeID));
 		User mentor = UserDAO.getUser(String.valueOf(mentorID));
 		User coach = UserDAO.getUser(String.valueOf(coachID));
 		User trainer = UserDAO.getUser(String.valueOf(trainerID));
-		
+
 		cohort.setTrainer(trainer);
 		cohort.setCoach(coach);
 		cohort.setMentor(mentor);
 		cohort.setSME(SME);
-		
+
 		CohortDAO.createCohort(cohort);
-		
+
 		return "redirect:/all-cohort";
 	}
 
@@ -215,6 +214,14 @@ public class AdminController {
 	@RequestMapping(value = "/admin-change-password", method = RequestMethod.GET)
 	public ModelAndView showChangePasswordPage(HttpSession session) {
 		ModelAndView model = new ModelAndView("admin-change-password");
+		return model;
+	}
+	
+	@RequestMapping(value = "/view-profile", method=RequestMethod.GET)
+	public ModelAndView viewProfile(@RequestParam Map<String, String> request, HttpSession session) {
+		String username = request.get("username");
+		ModelAndView model = new ModelAndView("admin-view-profile");
+		
 		return model;
 	}
 }
