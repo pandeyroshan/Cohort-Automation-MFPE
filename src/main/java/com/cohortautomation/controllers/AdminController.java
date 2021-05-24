@@ -28,6 +28,15 @@ public class AdminController {
 		model.addObject("allCohorts", CohortDAO.getAllCohorts());
 		return model;
 	}
+	
+	@RequestMapping("/delete-cohort")
+	public ModelAndView deleteACohort(@RequestParam Map<String, String> request, HttpSession session) {
+		String cohortId = request.get("cohortId");
+		CohortDAO.deleteCohort(cohortId);
+		ModelAndView model = new ModelAndView("admin-all-cohort");
+		model.addObject("allCohorts", CohortDAO.getAllCohorts());
+		return model;
+	}
 
 	@RequestMapping("/create-cohort")
 	public ModelAndView showCreateCohortPage(HttpSession session) {

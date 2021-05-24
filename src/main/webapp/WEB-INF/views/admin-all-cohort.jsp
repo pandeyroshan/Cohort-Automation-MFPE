@@ -143,6 +143,7 @@
 	                  <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
 	                  <p style="font-size: 15px;" class="text-center mt-2">${cohort.getName()}</p>
 	                  <button class="btn btn-success btn-sm mb-3">view Cohort</button>
+	                  <a><button class="btn btn-danger btn-sm mb-3">Delete cohort</button></a>
 	                </div>
 		      </c:forEach>
 

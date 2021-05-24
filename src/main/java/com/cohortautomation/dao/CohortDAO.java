@@ -152,4 +152,8 @@ public class CohortDAO {
 		
 		return false;
 	}
+	
+	public static boolean deleteCohort(String cohort_id) {
+		// write a logic to delete the cohort based on cohort_id
+	}
 }
