@@ -11,7 +11,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <title>CA - Admin Dashboard</title>
+    <title>Coach Dashboard</title>
     <style>
       body {
         font-family: "Lato", sans-serif;
@@ -121,7 +121,7 @@
         <img class="img-responsive mb-5" src="/resources/img/logo.png" style="width: 70%;">
 
         <div class="input-group mb-3 p-4">
-          <input type="text" class="form-control p-3" placeholder="Enter Keywords .." aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <input type="text" class="form-control p-3" placeholder="Enter Keywords .." aria-describedby="basic-addon2">
           <div class="input-group-append">
             <span class="input-group-text" id="basic-addon2">&#128269;</span>
           </div>
@@ -141,7 +141,7 @@
       </div>
 
       <div class="text-center p-3 myFooter" style="background-color: rgba(0, 0, 0, 0.2);">
-        <p class="mb-2">Admin Dashboard</p>
+        <p class="mb-2">Coach Dashboard</p>
       </div>
     </div>
 
@@ -174,7 +174,7 @@
             <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
               <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
               <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
-              <button onclick="location.href='/view-profile?username=${user.getUsername()}'" class="btn btn-success btn-sm mb-3">view profile</button>
+              <button class="btn btn-success btn-sm mb-3">view profile</button>
             </div>
         </c:forEach>
 

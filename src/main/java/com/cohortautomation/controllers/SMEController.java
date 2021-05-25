@@ -1,5 +1,5 @@
 package com.cohortautomation.controllers;
 
-public class SurveyResponseController {
-
+public class SMEController {
+	
 }

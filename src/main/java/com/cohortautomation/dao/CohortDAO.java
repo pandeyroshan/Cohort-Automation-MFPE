@@ -13,19 +13,19 @@ import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.beans.User;
 
 public class CohortDAO {
-	private static Connection con = DBConnection.getConnection();
 
 	public static Cohort getCohort(String cohortName) {
 		return new Cohort("INTADM21AJ021", "Java basics and Advance", new Date(), 12);
 	}
 
 	public static List<Cohort> getAllCohorts() {
+		Connection con = DBConnection.getConnection();
 		List<Cohort> cohortList = new ArrayList<Cohort>();
 		try {
 			PreparedStatement stmt = con.prepareStatement("select * from cohort");
 
 			ResultSet result = stmt.executeQuery();
-
+			
 			while (result.next()) {
 				Cohort cohort = new Cohort(result.getString(2), result.getString(3), result.getDate(4),
 						result.getInt(5));
@@ -35,12 +35,19 @@ public class CohortDAO {
 			return cohortList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;
 	}
 
 	public static List<Cohort> getAllCohortsForTrainer(User user) {
+		Connection con = DBConnection.getConnection();
 		List<Cohort> cohortList = new ArrayList<Cohort>();
 		try {
 			PreparedStatement stmt = con.prepareStatement("select * from cohort where trainer_id = ?");
@@ -57,12 +64,19 @@ public class CohortDAO {
 			return cohortList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;
 	}
 
 	public static List<Cohort> getAllCohortsForCoach(User user) {
+		Connection con = DBConnection.getConnection();
 		List<Cohort> cohortList = new ArrayList<Cohort>();
 		try {
 			PreparedStatement stmt = con.prepareStatement("select * from cohort where coach_id = ?");
@@ -79,12 +93,19 @@ public class CohortDAO {
 			return cohortList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;
 	}
 
 	public static List<Cohort> getAllCohortsForMentor(User user) {
+		Connection con = DBConnection.getConnection();
 		List<Cohort> cohortList = new ArrayList<Cohort>();
 		try {
 			PreparedStatement stmt = con.prepareStatement("select * from cohort where mentor_id = ?");
@@ -101,12 +122,19 @@ public class CohortDAO {
 			return cohortList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;
 	}
 
 	public static List<Cohort> getAllCohortsForSME(User user) {
+		Connection con = DBConnection.getConnection();
 		List<Cohort> cohortList = new ArrayList<Cohort>();
 		try {
 			PreparedStatement stmt = con.prepareStatement("select * from cohort where sme_id = ?");
@@ -123,12 +151,19 @@ public class CohortDAO {
 			return cohortList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;
 	}
 	
 	public static boolean createCohort(Cohort cohort) {
+		Connection con = DBConnection.getConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement("insert into cohort (name, description, start_date, total_weeks, coach_id, mentor_id, sme_id, trainer_id) values(?,?,?,?,?,?,?,?)");
 			stmt.setString(1, cohort.getName());
@@ -147,13 +182,19 @@ public class CohortDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
 		return false;
 	}
 	
-	public static boolean deleteCohort(String cohort_id) {
-		// write a logic to delete the cohort based on cohort_id
+	public static boolean deleteCohort(String cohortId) {
+		return true;
 	}
 }

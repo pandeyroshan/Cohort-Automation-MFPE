@@ -11,7 +11,7 @@ import com.cohortautomation.beans.User;
 import com.cohortautomation.dao.CohortDAO;
 import com.cohortautomation.dao.UserDAO;
 
-public class UserPermissions {
+public class UserUtility {
 	public static boolean isAuthenticated(HttpSession session) {
 		if(session.getAttribute("user") == null) {
 			return false;
@@ -28,6 +28,21 @@ public class UserPermissions {
 			model.addObject("allMentor", UserDAO.getAllMentor());
 			model.addObject("allCoach", UserDAO.getAllCoach());
 			model.addObject("allTrainer", UserDAO.getAllTrainer());
+			return model;
+		} else if(user.isSME()) {
+			ModelAndView model = new ModelAndView("sme-dashboard");
+			return model;
+		} else if(user.isMentor()) {
+			ModelAndView model = new ModelAndView("mentor-dashboard");
+			return model;
+		} else if(user.isTrainer()) {
+			ModelAndView model = new ModelAndView("trainer-dashboard");
+			return model;
+		} else if(user.isCoach()) {
+			ModelAndView model = new ModelAndView("coach-dashboard");
+			return model;
+		} else if(user.isMember()) {
+			ModelAndView model = new ModelAndView("member-dashboard");
 			return model;
 		}
 		return null;

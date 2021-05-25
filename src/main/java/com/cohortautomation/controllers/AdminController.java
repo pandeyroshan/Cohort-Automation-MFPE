@@ -229,8 +229,21 @@ public class AdminController {
 	@RequestMapping(value = "/view-profile", method=RequestMethod.GET)
 	public ModelAndView viewProfile(@RequestParam Map<String, String> request, HttpSession session) {
 		String username = request.get("username");
+		System.out.println(username);
 		ModelAndView model = new ModelAndView("admin-view-profile");
+		User user = UserDAO.getUser(username);
 		
+		if(user.isSME()) {
+			user.setMyCohorts(CohortDAO.getAllCohortsForSME(user));
+		} else if(user.isMentor()) {
+			user.setMyCohorts(CohortDAO.getAllCohortsForMentor(user));
+		} else if(user.isCoach()) {
+			user.setMyCohorts(CohortDAO.getAllCohortsForCoach(user));
+		} else if(user.isTrainer()) {
+			user.setMyCohorts(CohortDAO.getAllCohortsForTrainer(user));
+		}
+		
+		model.addObject("profile", user);
 		return model;
 	}
 }

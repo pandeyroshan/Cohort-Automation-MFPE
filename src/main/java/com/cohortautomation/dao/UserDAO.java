@@ -12,9 +12,9 @@ import com.cohortautomation.beans.User;
 import com.cohortautomation.utilities.MailService;
 
 public class UserDAO {
-	private static Connection con = DBConnection.getConnection();
 
 	public static boolean validate(String username, String password) {
+		Connection con = DBConnection.getConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement("select * from user where username=? and password=?");
 			stmt.setString(1, username);
@@ -25,11 +25,18 @@ public class UserDAO {
 			return result.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
 
 	public static User getUser(String username) {
+		Connection con = DBConnection.getConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement("select * from user where username = ?");
 			stmt.setString(1, username);
@@ -64,12 +71,19 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return null;
 	}
 
 	public static boolean isFirstLogin(User user) {
+		Connection con = DBConnection.getConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement("select is_first_login from user where employee_id = ?");
 			stmt.setInt(1, user.getEmployeeId());
@@ -81,12 +95,19 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return false;
 	}
 
 	public static boolean updateLastLogin(User user) {
+		Connection con = DBConnection.getConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement("update user set last_login = ? where username = ?");
 			stmt.setTimestamp(1, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
@@ -99,16 +120,24 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
 
 	public static boolean uncheckIsFirstLogin(User user) {
+		Connection con = DBConnection.getConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement("update user set is_first_login=0 where employee_id = ?;");
 			stmt.setInt(1, user.getEmployeeId());
 
 			int result = stmt.executeUpdate();
+			
 
 			if (result > 0) {
 				return true;
@@ -116,12 +145,19 @@ public class UserDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return false;
 	}
 
 	public static boolean createUser(User user) {
+		Connection con = DBConnection.getConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement(
 					"insert into user (employee_id, username, password, first_name, last_name, personal_email, corporate_email, is_mentor, is_SME, is_trainer, is_coach, is_member, is_first_login , is_admin) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -148,12 +184,19 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return false;
 	}
 
 	public static boolean updatePassword(User user, String newPassword) {
+		Connection con = DBConnection.getConnection();
 		try {
 			PreparedStatement stmt = con.prepareStatement("update user set password = ? where username=?");
 			stmt.setString(2, user.getUsername());
@@ -166,12 +209,19 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return false;
 	}
 
 	public static List<User> getAllSME() {
+		Connection con = DBConnection.getConnection();
 		List<User> smeList = new ArrayList<User>();
 
 		try {
@@ -187,11 +237,18 @@ public class UserDAO {
 			return smeList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
 
 	public static List<User> getAllMentor() {
+		Connection con = DBConnection.getConnection();
 		List<User> mentorList = new ArrayList<User>();
 
 		try {
@@ -208,11 +265,18 @@ public class UserDAO {
 			return mentorList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
 
 	public static List<User> getAllCoach() {
+		Connection con = DBConnection.getConnection();
 		List<User> coachList = new ArrayList<User>();
 
 		try {
@@ -229,11 +293,18 @@ public class UserDAO {
 			return coachList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
 
 	public static List<User> getAllTrainer() {
+		Connection con = DBConnection.getConnection();
 		List<User> trainerList = new ArrayList<User>();
 
 		try {
@@ -250,6 +321,12 @@ public class UserDAO {
 			return trainerList;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
