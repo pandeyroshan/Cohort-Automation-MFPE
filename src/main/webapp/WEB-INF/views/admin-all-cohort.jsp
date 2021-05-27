@@ -142,8 +142,7 @@
 					<div class="pt-3 px-3 mr-3 mt-2 bg-secondary text-center rounded">
 	                  <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
 	                  <p style="font-size: 15px;" class="text-center mt-2">${cohort.getName()}</p>
-	                  <button class="btn btn-success btn-sm mb-3">view Cohort</button>
-	                  <a><button class="btn btn-danger btn-sm mb-3">Delete cohort</button></a>
+	                  <button onclick="location.href='/view-cohort?cohortID=${cohort.getName()}'" class="btn btn-success btn-sm mb-3">view Cohort</button>
 	                </div>
 		      </c:forEach>
 

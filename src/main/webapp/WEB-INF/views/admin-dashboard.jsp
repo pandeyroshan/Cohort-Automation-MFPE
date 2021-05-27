@@ -159,7 +159,7 @@
 	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
 	              <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
 	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getName() }</p>
-	              <button class="btn btn-success btn-sm mb-3">view cohort</button>
+	              <button onclick="location.href='/view-cohort?cohortID=${cohort.getName()}'" class="btn btn-success btn-sm mb-3">view cohort</button>
 	            </div>
             </c:forEach>
 
@@ -189,7 +189,7 @@
             <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
               <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
               <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
-              <button class="btn btn-success btn-sm mb-3">view profile</button>
+              <button onclick="location.href='/view-profile?username=${user.getUsername()}'" class="btn btn-success btn-sm mb-3">view profile</button>
             </div>
 		  </c:forEach>
         </div>
@@ -203,7 +203,7 @@
             <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
               <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
               <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
-              <button class="btn btn-success btn-sm mb-3">view profile</button>
+              <button onclick="location.href='/view-profile?username=${user.getUsername()}'" class="btn btn-success btn-sm mb-3">view profile</button>
             </div>
           </c:forEach>
 
@@ -217,7 +217,7 @@
             <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
               <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
               <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
-              <button class="btn btn-success btn-sm mb-3">view profile</button>
+              <button onclick="location.href='/view-profile?username=${user.getUsername()}'" class="btn btn-success btn-sm mb-3">view profile</button>
             </div>
 		  </c:forEach>
         </div>

@@ -1,173 +1,256 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
 
-    <title>View Profile</title>
-    <style>
-      body {
-        font-family: "Lato", sans-serif;
-      }
+<title>View Profile</title>
+<style>
+body {
+	font-family: "Lato", sans-serif;
+}
 
-      .sidenav {
-        height: 100%;
-        width: 25%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #9BB0DA;
-        overflow-x: hidden;
-        padding-top: 20px;
-      }
+.sidenav {
+	height: 100%;
+	width: 25%;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #9BB0DA;
+	overflow-x: hidden;
+	padding-top: 20px;
+}
 
-      .sidenav a {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        display: block;
-      }
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	display: block;
+}
 
-      .sidenav a:hover {
-        color: #f1f1f1;
-      }
+.sidenav a:hover {
+	color: #f1f1f1;
+}
 
-      .main {
-        margin-left: 25%; /* Same as the width of the sidenav */
-        font-size: 28px; /* Increased text to enable scrolling */
-        padding: 0px 10px;
-      }
+.main {
+	margin-left: 25%; /* Same as the width of the sidenav */
+	font-size: 28px; /* Increased text to enable scrolling */
+	padding: 0px 10px;
+}
 
-      @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
-      }
-      .myFooter{
-        height: 50px; 
-        position: fixed; 
-        bottom:0%;
-        width:25%; 
-        background-color: #393838; 
-        opacity: 1;
-      }
-      div.scrollmenu {
-        background-color: #C4C4C4;
-        overflow: auto;
-        white-space: nowrap;
-      }
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
 
-      div.scrollmenu a {
-        display: inline-block;
-        color: white;
-        text-align: center;
-        padding: 14px;
-        text-decoration: none;
-      }
+.myFooter {
+	height: 50px;
+	position: fixed;
+	bottom: 0%;
+	width: 25%;
+	background-color: #393838;
+	opacity: 1;
+}
 
-      div.scrollmenu a:hover {
-        background-color: #777;
-      }
+div.scrollmenu {
+	background-color: #C4C4C4;
+	overflow: auto;
+	white-space: nowrap;
+}
 
-      span{
-        font-size: 20px;
-        margin-right: 5px;
-      }
-      p.cohort-label{
-        padding: 0;
-        margin: 0;
-      }
-      .card-body {
-        min-height: 300px;
-        min-width: 300px;
-        margin-right: 5px;
-      }
+div.scrollmenu a {
+	display: inline-block;
+	color: white;
+	text-align: center;
+	padding: 14px;
+	text-decoration: none;
+}
 
-      .main {
-        overflow:   scroll;
-      }
-      ::-webkit-scrollbar {
-          width: 0px;
-          background: transparent;
-      }
-      .myNavLink:hover{
-        font-weight: bold;
-        cursor: pointer;
-      }
-      .cohortClass{
-        cursor: pointer;
-        border: solid;
-        border-color: #C4C4C4;
-      }
-      .cohortClass:hover{
-        border-color: #fff;
-      }
-      a{
-        text-decoration: none;
+div.scrollmenu a:hover {
+	background-color: #777;
+}
 
-      }
+span {
+	font-size: 20px;
+	margin-right: 5px;
+}
 
-    </style>
-  </head>
-  <body>
-    <div class="sidenav">
-      <div class="text-center">
-        <img class="img-responsive mb-5" src="/resources/img/logo.png" style="width: 70%;">
+p.cohort-label {
+	padding: 0;
+	margin: 0;
+}
 
-        <div class="input-group mb-3 p-4">
-          <input type="text" class="form-control p-3" placeholder="Enter Keywords .." aria-label="Recipient's username" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <span class="input-group-text" id="basic-addon2">&#128269;</span>
-          </div>
-        </div>
-      </div>
+.card-body {
+	min-height: 300px;
+	min-width: 300px;
+	margin-right: 5px;
+}
 
-      <div class="text-left pl-5 pt-3 pr-5">
-        <p class="myNavLink" onclick="location.href='/'">Homepage</p>
-        <p class="myNavLink" onclick="location.href='/all-cohort'">Cohorts</p>
-        <p class="myNavLink" onclick="location.href='/all-sme'">SMEs</p>
-        <p class="myNavLink" onclick="location.href='/all-mentor'">Mentors</p>
-        <p class="myNavLink" onclick="location.href='/all-coach'">Coaches</p>
-        <p class="myNavLink" onclick="location.href='/all-trainer'">Trainer</p>
-        <hr>
-        <p class="myNavLink">Change Password</p>
-        <p class="myNavLink">My Profile</p>
-      </div>
+.main {
+	overflow: scroll;
+}
 
-      <div class="text-center p-3 myFooter" style="background-color: rgba(0, 0, 0, 0.2);">
-        <p class="mb-2">Admin Dashboard</p>
-      </div>
-    </div>
+::-webkit-scrollbar {
+	width: 0px;
+	background: transparent;
+}
 
-    <div class="main px-4">
-      <div class="text-right mt-2 mr-2">
-        <span style="font-size: 15px" class="mr-2">Welcome admin</span>
-        <a href="/logout"><img src="/resources/img/logout.png" class="mt-1" style="width: 15px; height: 15px;"></a>
-      </div>
-      
-      <!-- Breadcrumb -->
-      <small class="font-weight-light text-secondary">
-        <span style="font-size: 15px;">
-          <a href="/">Home</a> /
-        </span>
-        <span style="font-size: 15px;">
-          View Profile - ${profile.getFullName() }
-        </span>
-      </small>
-      <div class="text-right">
-      	<button class="btn btn-success">Edit</button>
-      	<button class="btn btn-danger">Delete</button>
-      </div>
-      <p class="font-weight-light" style="font-size: 20px;">${profile.getFullName() }</p>
-	
-    </div>
+.myNavLink:hover {
+	font-weight: bold;
+	cursor: pointer;
+}
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-  </body>
+.cohortClass {
+	cursor: pointer;
+	border: solid;
+	border-color: #C4C4C4;
+}
+
+.cohortClass:hover {
+	border-color: #fff;
+}
+
+a {
+	text-decoration: none;
+}
+</style>
+</head>
+<body>
+	<div class="sidenav">
+		<div class="text-center">
+			<img class="img-responsive mb-5" src="/resources/img/logo.png"
+				style="width: 70%;">
+
+			<div class="input-group mb-3 p-4">
+				<input type="text" class="form-control p-3"
+					placeholder="Enter Keywords .." aria-label="Recipient's username"
+					aria-describedby="basic-addon2">
+				<div class="input-group-append">
+					<span class="input-group-text" id="basic-addon2">&#128269;</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-left pl-5 pt-3 pr-5">
+			<p class="myNavLink" onclick="location.href='/'">Homepage</p>
+			<p class="myNavLink" onclick="location.href='/all-cohort'">Cohorts</p>
+			<p class="myNavLink" onclick="location.href='/all-sme'">SMEs</p>
+			<p class="myNavLink" onclick="location.href='/all-mentor'">Mentors</p>
+			<p class="myNavLink" onclick="location.href='/all-coach'">Coaches</p>
+			<p class="myNavLink" onclick="location.href='/all-trainer'">Trainer</p>
+			<hr>
+			<p class="myNavLink">Change Password</p>
+			<p class="myNavLink">My Profile</p>
+		</div>
+
+		<div class="text-center p-3 myFooter"
+			style="background-color: rgba(0, 0, 0, 0.2);">
+			<p class="mb-2">Admin Dashboard</p>
+		</div>
+	</div>
+
+	<div class="main px-4">
+		<div class="text-right mt-2 mr-2">
+			<span style="font-size: 15px" class="mr-2">Welcome admin</span> <a
+				href="/logout"><img src="/resources/img/logout.png" class="mt-1"
+				style="width: 15px; height: 15px;"></a>
+		</div>
+
+		<!-- Breadcrumb -->
+		<small class="font-weight-light text-secondary"> <span
+			style="font-size: 15px;"> <a href="/">Home</a> /
+		</span> <span style="font-size: 15px;"> View Profile -
+				${profile.getFullName() } - ${role} </span>
+		</small>
+		<div class="text-right">
+			<button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Edit</button>
+			
+			<!-- Edit profile Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body text-left">
+			      	<form method="post" action="/edit-profile">
+		              <label for="exampleInputEmail1" style="font-size: 15px;">Employee ID</label>
+		              <input type="number" class="form-control" name="empID" placeholder="Enter Employee ID" value=${profile.getUsername() } readonly>
+		
+		              <label for="exampleInputEmail1" style="font-size: 15px;">First Name</label>
+		              <input type="text" class="form-control" name="fname" placeholder="Enter First Name" value=${profile.getFirstName() } required>
+		
+		              <label for="exampleInputEmail1" style="font-size: 15px;">Last Name</label>
+		              <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" value=${profile.getLastName() } required>
+		
+		              <label for="exampleInputEmail1" style="font-size: 15px;">Email Address</label>
+		              <input type="email" class="form-control" name="email" placeholder="Enter Email address" value=${profile.getPersonalEmail() } required>
+		              
+		              <div class="text-right mt-3">
+		                  <button type="submit" class="btn btn-primary">Update Profile</button>
+		              </div>
+		          </form>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<button onclick="location.href='/delete-profile?username=${profile.getUsername()}'" class="btn btn-danger">Delete</button>
+		</div>
+		<p class="font-weight-light"
+			style="font-size: 20px; margin: 0; padding: 0;">${profile.getFullName() } - ${role}</p>
+		<small style="font-size: 20px;"> Email:
+			${profile.getPersonalEmail() } </small>
+		<hr>
+		<p class="text-center text-success" style="font-size: 20px;">${profile.getFullName() }'s
+			Cohorts</p>
+		<table class="table table-striped" style="font-size: 15px;">
+			<thead>
+				<tr>
+					<th scope="col">S.No.</th>
+					<th scope="col">Cohort ID</th>
+					<th scope="col">Description</th>
+					<th scope="col">Start Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="cohort" items="${cohorts}" varStatus="theCount">
+					<tr>
+						<td>${theCount.count}</td>
+						<td>${cohort.getName() }</td>
+						<td>${cohort.getDescription() }</td>
+						<td>${cohort.getStartdate() }</td>
+					</tr>
+	            </c:forEach>
+			</tbody>
+		</table>
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+		crossorigin="anonymous"></script>
+</body>
 </html>

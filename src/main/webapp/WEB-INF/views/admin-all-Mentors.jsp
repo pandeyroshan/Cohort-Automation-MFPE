@@ -142,31 +142,7 @@
 					<div class="pt-3 px-3 mr-3 mt-2 bg-secondary text-center rounded">
 	                  <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
 	                  <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName()}</p>
-	                  <button class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#exampleModalCenter${user.getUsername()}">view profile</button>
-	                  
-	                  <div class="modal fade" id="exampleModalCenter${user.getUsername()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-						  <div class="modal-dialog" role="document">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLongTitle">${user.getFullName()} - Mentor</h5>
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						          <span aria-hidden="true">&times;</span>
-						        </button>
-						      </div>
-						      <div class="modal-body text-center">
-						      	<img src="/resources/img/profile-user.png" class="img-responsive mb-3" style="width: 100px; height: 100px;">
-						      	<p style="font-size: 20px; margin:0; padding:0;">${user.getFullName()} (${user.getUsername()})</p>
-						      	<p class="text-muted" style="font-size: 20px; margin:0; padding:0;">${user.getPersonalEmail()}</p>
-						      	
-						      	<p class="text-left text-success" style="font-size: 20px;">Cohorts</p>
-						      	<c:forEach var="cohort" items="${user.getMyCohorts()}">
-						      		<p class="text-left" style="font-size: 15px;">${cohort.getName() } <a href="" style="text-decoration: none;">&#8599;</a></p>
-						      	</c:forEach>
-						      	<hr>
-						      </div>
-						    </div>
-						  </div>
-					  </div>
+	                  <button onclick="location.href='/view-profile?username=${user.getUsername()}'" class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#exampleModalCenter${user.getUsername()}">view profile</button>
 	                </div>
 			  </c:forEach>
 

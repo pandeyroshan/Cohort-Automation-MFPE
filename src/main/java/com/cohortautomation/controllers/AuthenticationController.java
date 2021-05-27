@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,14 +33,12 @@ public class AuthenticationController {
 
 			session.setAttribute("user", user);
 			
-			System.out.println(user);
-
 			if (checkIfFirstLogin) {
-				System.out.println("First Login\n\n\n");
 				session.setAttribute("message", "You haven't changed your password yet, Please change it.");
 			}
 			return "redirect:/";
 		} else {
+			session.setAttribute("loginError", "Invalid Credentials");
 			return "redirect:/login";
 		}
 	}
@@ -68,7 +65,6 @@ public class AuthenticationController {
 		
 		if(newPassword.equals(confirmNewPassword)) {
 			User user = (User) session.getAttribute("user");
-			System.out.println("CP: "+user);
 			boolean validate = UserDAO.validate(user.getUsername(), oldPassword);
 			
 			if(validate) {
@@ -90,7 +86,6 @@ public class AuthenticationController {
 				}
 			} else {
 				// old password mismatch
-				System.out.println("\n\n\nMISMATCH\n\n\n");
 				session.setAttribute("oldPasswordErrorMessage", "Please provide correct old password.");
 			}
 		} else {

@@ -137,7 +137,6 @@ public class UserDAO {
 			stmt.setInt(1, user.getEmployeeId());
 
 			int result = stmt.executeUpdate();
-			
 
 			if (result > 0) {
 				return true;
@@ -329,5 +328,56 @@ public class UserDAO {
 			}
 		}
 		return null;
+	}
+
+	public static boolean updateProfile(int EmployeeId, String firstName, String lastName, String email) {
+		Connection con = DBConnection.getConnection();
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("update user set first_name=?, last_name=?, personal_email=? where username=?");
+			stmt.setString(1, firstName);
+			stmt.setString(2, lastName);
+			stmt.setString(3, email);
+			stmt.setString(4, String.valueOf(EmployeeId));
+
+			int result = stmt.executeUpdate();
+			if (result > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+
+	}
+
+	public static boolean deleteProfile(String empID) {
+		Connection con = DBConnection.getConnection();
+
+		try {
+			PreparedStatement stmt = con.prepareStatement("delete from user where username=?");
+			stmt.setString(1, empID);
+
+			int result = stmt.executeUpdate();
+
+			if (result > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+
 	}
 }

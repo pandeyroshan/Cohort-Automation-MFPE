@@ -28,7 +28,7 @@ public class AdminController {
 		model.addObject("allCohorts", CohortDAO.getAllCohorts());
 		return model;
 	}
-	
+
 	@RequestMapping("/delete-cohort")
 	public ModelAndView deleteACohort(@RequestParam Map<String, String> request, HttpSession session) {
 		String cohortId = request.get("cohortId");
@@ -225,25 +225,116 @@ public class AdminController {
 		ModelAndView model = new ModelAndView("admin-change-password");
 		return model;
 	}
-	
-	@RequestMapping(value = "/view-profile", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/view-profile", method = RequestMethod.GET)
 	public ModelAndView viewProfile(@RequestParam Map<String, String> request, HttpSession session) {
 		String username = request.get("username");
-		System.out.println(username);
 		ModelAndView model = new ModelAndView("admin-view-profile");
 		User user = UserDAO.getUser(username);
-		
-		if(user.isSME()) {
-			user.setMyCohorts(CohortDAO.getAllCohortsForSME(user));
-		} else if(user.isMentor()) {
-			user.setMyCohorts(CohortDAO.getAllCohortsForMentor(user));
-		} else if(user.isCoach()) {
-			user.setMyCohorts(CohortDAO.getAllCohortsForCoach(user));
-		} else if(user.isTrainer()) {
-			user.setMyCohorts(CohortDAO.getAllCohortsForTrainer(user));
+
+		if (user.isSME()) {
+			model.addObject("cohorts", CohortDAO.getAllCohortsForSME(user));
+			model.addObject("role", "SME");
+		} else if (user.isMentor()) {
+			model.addObject("cohorts", CohortDAO.getAllCohortsForMentor(user));
+			model.addObject("role", "Mentor");
+		} else if (user.isCoach()) {
+			model.addObject("cohorts", CohortDAO.getAllCohortsForCoach(user));
+			model.addObject("role", "Coach");
+		} else if (user.isTrainer()) {
+			model.addObject("cohorts", CohortDAO.getAllCohortsForTrainer(user));
+			model.addObject("role", "Trainer");
 		}
-		
+
 		model.addObject("profile", user);
+		return model;
+	}
+
+	@RequestMapping(value = "/view-cohort", method = RequestMethod.GET)
+	public ModelAndView viewCohort(@RequestParam Map<String, String> request, HttpSession session) {
+		String cohortId = request.get("cohortID");
+		Cohort cohort = CohortDAO.getCohort(cohortId);
+		ModelAndView model = new ModelAndView("admin-view-cohort");
+		model.addObject("cohort", cohort);
+		model.addObject("allSME", UserDAO.getAllSME());
+		model.addObject("allMentor", UserDAO.getAllMentor());
+		model.addObject("allCoach", UserDAO.getAllCoach());
+		model.addObject("allTrainer", UserDAO.getAllTrainer());
+		return model;
+	}
+
+	@RequestMapping(value = "/edit-cohort", method = RequestMethod.POST)
+	public ModelAndView editCohort(@RequestParam Map<String, String> request, HttpSession session) {
+		String oldCohortId = request.get("oldCohortId");
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		String cohortCode = request.get("cohortCode");
+		Date startDate = null;
+		String cohortDesc = request.get("cohortDesc");
+		try {
+			startDate = sdf.parse(request.get("startDate"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int totalWeeks = Integer.parseInt(request.get("totalWeeks"));
+		int trainerID = Integer.parseInt(request.get("trainerID"));
+		int coachID = Integer.parseInt(request.get("coachID"));
+		int mentorID = Integer.parseInt(request.get("mentorID"));
+		int smeID = Integer.parseInt(request.get("smeID"));
+
+		Cohort cohort = new Cohort(cohortCode, cohortDesc, startDate, totalWeeks);
+
+		User SME = UserDAO.getUser(String.valueOf(smeID));
+		User mentor = UserDAO.getUser(String.valueOf(mentorID));
+		User coach = UserDAO.getUser(String.valueOf(coachID));
+		User trainer = UserDAO.getUser(String.valueOf(trainerID));
+
+		cohort.setTrainer(trainer);
+		cohort.setCoach(coach);
+		cohort.setMentor(mentor);
+		cohort.setSME(SME);
+
+		boolean updateCohort = CohortDAO.updateCohort(oldCohortId, cohort);
+		System.out.println("\n\n\n\n" + updateCohort + "\n\n\n\n");
+
+		ModelAndView model = new ModelAndView("redirect:/all-cohort");
+		return model;
+	}
+
+	@RequestMapping(value = "/delete-cohort", method = RequestMethod.GET)
+	public ModelAndView deleteCohort(@RequestParam Map<String, String> request, HttpSession session) {
+		String cohortId = request.get("cohortId");
+		CohortDAO.deleteCohort(cohortId);
+
+		ModelAndView model = new ModelAndView("redirect:/all-cohort");
+		return model;
+	}
+
+	@RequestMapping(value = "/edit-profile", method = RequestMethod.POST)
+	public ModelAndView editProfile(@RequestParam Map<String, String> request, HttpSession session) {
+		int employeeID = Integer.parseInt(request.get("empID"));
+		String firstName = request.get("fname");
+		String lastName = request.get("lname");
+		String email = request.get("email");
+
+		boolean updateProfile = UserDAO.updateProfile(employeeID, firstName, lastName, email);
+
+		System.out.println(updateProfile);
+
+		ModelAndView model = new ModelAndView("redirect:/view-profile?username=" + employeeID);
+		return model;
+	}
+
+	@RequestMapping(value = "/delete-profile", method = RequestMethod.GET)
+	public ModelAndView deleteProfile(@RequestParam Map<String, String> request, HttpSession session) {
+		String employeeId = request.get("username");
+
+		boolean result = UserDAO.deleteProfile(employeeId);
+		System.out.println("\n\n\n\n"+result+"\n\n\n\n");
+
+		ModelAndView model = new ModelAndView("redirect:/");
+
 		return model;
 	}
 }
