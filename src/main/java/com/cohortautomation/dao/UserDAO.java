@@ -194,6 +194,46 @@ public class UserDAO {
 		return false;
 	}
 
+	public static boolean createUser(User user, String cohortId) {
+		Connection con = DBConnection.getConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(
+					"insert into user (employee_id, username, password, first_name, last_name, personal_email, corporate_email, is_mentor, is_SME, is_trainer, is_coach, is_member, is_first_login , cohort ,is_admin) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			stmt.setInt(1, user.getEmployeeId());
+			stmt.setString(2, user.getUsername());
+			stmt.setString(3, user.getPassword());
+			stmt.setString(4, user.getFirstName());
+			stmt.setString(5, user.getLastName());
+			stmt.setString(6, user.getPersonalEmail());
+			stmt.setString(7, user.getPersonalEmail());
+			stmt.setBoolean(8, user.isMentor());
+			stmt.setBoolean(9, user.isSME());
+			stmt.setBoolean(10, user.isTrainer());
+			stmt.setBoolean(11, user.isCoach());
+			stmt.setBoolean(12, user.isMember());
+			stmt.setBoolean(13, true);
+			stmt.setString(14, cohortId);
+			stmt.setBoolean(15, user.isAdmin());
+
+			int result = stmt.executeUpdate();
+
+			if (result > 0) {
+				MailService.sendCredentials(user);
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean updatePassword(User user, String newPassword) {
 		Connection con = DBConnection.getConnection();
 		try {
@@ -375,9 +415,13 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-
 		return false;
-
 	}
 }

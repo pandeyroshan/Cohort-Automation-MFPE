@@ -14,14 +14,13 @@ public class Survey {
 	private ArrayList<Question> questionsList;
 	private Cohort cohort;
 
-	public Survey(String surveyName, LocalDateTime startDateTime, LocalDateTime endDateTime, int createBy,
-			LocalDateTime createAt, Cohort cohort) {
+	public Survey(String surveyName, LocalDateTime startDateTime, LocalDateTime endDateTime, int createBy, Cohort cohort) {
 		super();
 		this.surveyName = surveyName;
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
 		this.createBy = createBy;
-		this.createAt = createAt;
+		this.createAt = java.time.LocalDateTime.now();
 		this.questionsList = new ArrayList<Question>();
 		this.cohort = cohort;
 	}

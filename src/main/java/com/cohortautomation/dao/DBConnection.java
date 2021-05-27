@@ -1,23 +1,22 @@
 package com.cohortautomation.dao;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 public class DBConnection {
-	private static HikariDataSource dataSource = null;
-	 
+    private static BasicDataSource dataSource = null;
+    
     static {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://31.170.167.102/u322094628_ca?autoReconnect=true");
-        config.setUsername("u322094628_root");
-        config.setPassword("1ED;2?^f+4");
-        config.addDataSourceProperty("minimumIdle", "5");
-        config.addDataSourceProperty("maximumPoolSize", "25");
+        dataSource = new BasicDataSource();
+        dataSource.setUrl("jdbc:mysql://localhost/cohort_automation?autoReconnect=true");
+        dataSource.setUsername("root");
+        dataSource.setPassword("rootjuet");
  
-        dataSource = new HikariDataSource(config);
+        dataSource.setMinIdle(5);
+        dataSource.setMaxIdle(10);
+        dataSource.setMaxTotal(25);
+ 
     }
     
     public static Connection getConnection() {

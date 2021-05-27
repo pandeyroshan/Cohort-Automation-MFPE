@@ -286,4 +286,33 @@ public class CohortDAO {
 		}
 		return false;
 	}
+	
+	public static List<User> getAllMembersForCohort(String cohortId){
+		List<User> listMember = new ArrayList<User>();
+		
+		Connection con = DBConnection.getConnection();
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement("select username, first_name, last_name, personal_email from user where cohort=?");
+			stmt.setString(1, cohortId);
+			
+			ResultSet result = stmt.executeQuery();
+			
+			while(result.next()) {
+				User user = new User(Integer.parseInt(result.getString(1)), result.getString(1), "" ,result.getString(2), result.getString(3), result.getString(4));
+				listMember.add(user);
+			}
+			return listMember;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
 }

@@ -36,7 +36,12 @@ public class AuthenticationController {
 			if (checkIfFirstLogin) {
 				session.setAttribute("message", "You haven't changed your password yet, Please change it.");
 			}
-			return "redirect:/";
+			
+			if(session.getAttribute("nextUrl") != null) {
+				return "redirect:"+session.getAttribute("nextUrl");
+			} else {
+				return "redirect:/";
+			}
 		} else {
 			session.setAttribute("loginError", "Invalid Credentials");
 			return "redirect:/login";

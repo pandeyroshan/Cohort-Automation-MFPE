@@ -250,19 +250,6 @@ public class AdminController {
 		return model;
 	}
 
-	@RequestMapping(value = "/view-cohort", method = RequestMethod.GET)
-	public ModelAndView viewCohort(@RequestParam Map<String, String> request, HttpSession session) {
-		String cohortId = request.get("cohortID");
-		Cohort cohort = CohortDAO.getCohort(cohortId);
-		ModelAndView model = new ModelAndView("admin-view-cohort");
-		model.addObject("cohort", cohort);
-		model.addObject("allSME", UserDAO.getAllSME());
-		model.addObject("allMentor", UserDAO.getAllMentor());
-		model.addObject("allCoach", UserDAO.getAllCoach());
-		model.addObject("allTrainer", UserDAO.getAllTrainer());
-		return model;
-	}
-
 	@RequestMapping(value = "/edit-cohort", method = RequestMethod.POST)
 	public ModelAndView editCohort(@RequestParam Map<String, String> request, HttpSession session) {
 		String oldCohortId = request.get("oldCohortId");

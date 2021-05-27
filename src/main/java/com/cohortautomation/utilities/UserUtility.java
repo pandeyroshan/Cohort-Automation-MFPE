@@ -40,6 +40,7 @@ public class UserUtility {
 			return model;
 		} else if(user.isCoach()) {
 			ModelAndView model = new ModelAndView("coach-dashboard");
+			model.addObject("allCohort", CohortDAO.getAllCohortsForCoach(user));
 			return model;
 		} else if(user.isMember()) {
 			ModelAndView model = new ModelAndView("member-dashboard");

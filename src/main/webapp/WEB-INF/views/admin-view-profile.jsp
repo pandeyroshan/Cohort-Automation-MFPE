@@ -177,6 +177,8 @@ a {
 		</span> <span style="font-size: 15px;"> View Profile -
 				${profile.getFullName() } - ${role} </span>
 		</small>
+		
+		
 		<div class="text-right">
 			<button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Edit</button>
 			
