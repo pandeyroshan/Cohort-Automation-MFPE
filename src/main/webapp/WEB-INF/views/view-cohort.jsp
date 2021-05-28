@@ -1,6 +1,8 @@
-<%@ page import="com.cohortautomation.beans.User" language="java" contentType="text/html; charset=UTF-8"
+<%@ page
+	import="com.cohortautomation.beans.User, com.cohortautomation.beans.Meeting"
+	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -168,10 +170,10 @@ a {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Survey</p>");
 				} else if(user.isCoach()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\"><strong>Cohorts</strong></p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Survey</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Surveys</p>");
 				} else if(user.isTrainer()){
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
@@ -211,8 +213,9 @@ a {
 
 	<div class="main px-4">
 		<div class="text-right mt-2 mr-2">
-			<span style="font-size: 15px" class="mr-2">Welcome ${user.getFullName() }</span> <a
-				href="/logout"><img src="/resources/img/logout.png" class="mt-1"
+			<span style="font-size: 15px" class="mr-2">Welcome
+				${user.getFullName() }</span> <a href="/logout"><img
+				src="/resources/img/logout.png" class="mt-1"
 				style="width: 15px; height: 15px;"></a>
 		</div>
 
@@ -227,203 +230,283 @@ a {
 				if(user.isAdmin()){
 					out.print("<button class=\"btn btn-success mr-3\" data-toggle=\"modal\" data-target=\"#exampleModal\">Edit</button>");
 					out.print("<button onclick=\"location.href='/delete-cohort?cohortId=${cohort.getName()}'\" class=\"btn btn-danger\">Delete</button>");
+				} else if(user.isSME()){
+					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");
+				} else if(user.isMentor()){
+					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");
 				} else if(user.isCoach()){
-					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success mr-3\">Create Meeting</button>");
-					out.print("<button data-toggle=\"modal\" data-target=\"#addMemberModal\" class=\"btn btn-success\">Add Members</button>");
+					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");
+					out.print("<button data-toggle=\"modal\" data-target=\"#addMemberModal\" class=\"btn btn-success btn-sm\">Add Members</button>");
+				} else if(user.isTrainer()){
+					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");
 				}
 			%>
-			
+
 			<!-- Edit Cohort Modal -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Edit ${cohort.getName() }</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body text-left">
-			      	<form method="post" action="/edit-cohort">
-			      		<input type="hidden" name="oldCohortId" value=${cohort.getName() }>
-	                    <label style="font-size: 15px;">Cohort Code</label>
-	                    <input type="text" class="form-control" name="cohortCode" placeholder="Provide a cohort Code" value=${cohort.getName() }>
-	                    
-	                    <label style="font-size: 15px;">Cohort Description</label>
-	                    <input type="text" class="form-control" name="cohortDesc" placeholder="Provide a cohort Description ex - Advance Java Track" value=${cohort.getDescription() }>
-	
-	                    <label style="font-size: 15px;">Start Date</label>
-	                    <input type="date" class="form-control" name="startDate">
-	
-	                    <label style="font-size: 15px;">Total Weeks</label>
-	                    <input type="number" class="form-control" name="totalWeeks" placeholder="Provide number of weeks">
-	
-	                    <label for="exampleInputEmail1" style="font-size: 15px;">Trainer</label>
-	                    <div class="d-flex">
-	                        <select class="form-control" name="trainerID">
-	                        <c:forEach var="trainer" items="${allTrainer}">
-	                          <option value="${trainer.getUsername() }">${trainer.getFullName()}</option>
-	                        </c:forEach>
-	                        </select>
-	                    </div>
-	
-	                    <label for="exampleInputEmail1" style="font-size: 15px;">Coach</label>
-	                    <div class="d-flex">
-	                        <select class="form-control" name="coachID">
-	                          <c:forEach var="coach" items="${allCoach}">
-	                          	<option value="${coach.getUsername() }">${coach.getFullName()}</option>
-	                          </c:forEach>
-	                        </select>
-	                    </div>
-	
-	                    <label for="exampleInputEmail1" style="font-size: 15px;">Mentor</label>
-	                    <div class="d-flex">
-	                        <select class="form-control" name="mentorID">
-	                          <c:forEach var="mentor" items="${allMentor}">
-	                          	<option value="${mentor.getUsername() }">${mentor.getFullName()}</option>
-	                          </c:forEach>
-	                        </select>
-	                    </div>
-	
-	                    <label for="exampleInputEmail1" style="font-size: 15px;">SMEs</label>
-	                    <div class="d-flex">
-	                        <select class="form-control" name="smeID">
-	                          <c:forEach var="sme" items="${allSME}">
-	                          	<option value="${sme.getUsername() }">${sme.getFullName()}</option>
-	                          </c:forEach>
-	                        </select>
-	                    </div>
-	                    <hr>
-	                    <div class="text-right mt-3">
-	                        <button type="submit" class="btn btn-success">Update Cohort</button>
-	                    </div>
-	                </form>
-			      </div>
-			    </div>
-			  </div>
-			</div>	
-			
-					
-			<!-- Create Meeting Modal -->
-			<div class="modal fade" id="createMeetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Create Meeting -  ${cohort.getName() }</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body text-left">
-			      	<form method="post" action="/edit-cohort">
-			      		<input type="hidden" name="oldCohortId" value=${cohort.getName() }>
-	                    <label style="font-size: 15px;">Cohort Code</label>
-	                    <input type="text" class="form-control" name="cohortCode" placeholder="Provide a cohort Code" value=${cohort.getName() }>
-	                    
-	                    
-	                    <hr>
-	                    <div class="text-right mt-3">
-	                        <button type="submit" class="btn btn-success">Update Cohort</button>
-	                    </div>
-	                </form>
-			      </div>
-			    </div>
-			  </div>
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Edit
+								${cohort.getName() }</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body text-left">
+							<form method="post" action="/edit-cohort">
+								<input type="hidden" name="oldCohortId"
+									value=${cohort.getName() }> <label
+									style="font-size: 15px;">Cohort Code</label> <input type="text"
+									class="form-control" name="cohortCode"
+									placeholder="Provide a cohort Code" value=${cohort.getName() }>
+
+								<label style="font-size: 15px;">Cohort Description</label> <input
+									type="text" class="form-control" name="cohortDesc"
+									placeholder="Provide a cohort Description ex - Advance Java Track"
+									value=${cohort.getDescription() }> <label
+									style="font-size: 15px;">Start Date</label> <input type="date"
+									class="form-control" name="startDate"> <label
+									style="font-size: 15px;">Total Weeks</label> <input
+									type="number" class="form-control" name="totalWeeks"
+									placeholder="Provide number of weeks"> <label
+									for="exampleInputEmail1" style="font-size: 15px;">Trainer</label>
+								<div class="d-flex">
+									<select class="form-control" name="trainerID">
+										<c:forEach var="trainer" items="${allTrainer}">
+											<option value="${trainer.getUsername() }">${trainer.getFullName()}</option>
+										</c:forEach>
+									</select>
+								</div>
+
+								<label for="exampleInputEmail1" style="font-size: 15px;">Coach</label>
+								<div class="d-flex">
+									<select class="form-control" name="coachID">
+										<c:forEach var="coach" items="${allCoach}">
+											<option value="${coach.getUsername() }">${coach.getFullName()}</option>
+										</c:forEach>
+									</select>
+								</div>
+
+								<label for="exampleInputEmail1" style="font-size: 15px;">Mentor</label>
+								<div class="d-flex">
+									<select class="form-control" name="mentorID">
+										<c:forEach var="mentor" items="${allMentor}">
+											<option value="${mentor.getUsername() }">${mentor.getFullName()}</option>
+										</c:forEach>
+									</select>
+								</div>
+
+								<label for="exampleInputEmail1" style="font-size: 15px;">SMEs</label>
+								<div class="d-flex">
+									<select class="form-control" name="smeID">
+										<c:forEach var="sme" items="${allSME}">
+											<option value="${sme.getUsername() }">${sme.getFullName()}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<hr>
+								<div class="text-right mt-3">
+									<button type="submit" class="btn btn-success">Update
+										Cohort</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
-			
+
+
+			<!-- Create Meeting Modal -->
+			<div class="modal fade" id="createMeetingModal" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Create
+								Meeting - ${cohort.getName() }</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body text-left">
+							<form method="post" action="/create-meeting">
+								<input type="hidden" name="CohortId" value=${cohort.getName() }>
+								<input type="hidden" name="username"
+									value=${user.getUsername() }> <label
+									style="font-size: 15px;">Meeting name</label> <input
+									type="text" class="form-control" name="meetingName"
+									placeholder="Meeting Name"> <label
+									style="font-size: 15px;">Meeting start time</label> <input
+									type="datetime-local" class="form-control" name="startDateTime">
+
+								<label style="font-size: 15px;">Meeting end time</label> <input
+									type="datetime-local" class="form-control" name="endDateTime">
+
+								<label style="font-size: 15px;">Meeting link</label> <input
+									type="url" class="form-control" name="meetingLink">
+
+
+								<hr>
+								<div class="text-right mt-3">
+									<button type="submit" class="btn btn-success">Create
+										Meeting</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<!-- Add member Modal -->
-			<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Add Member ${cohort.getName() }</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body text-left">
-						<form method="post" action="/add-member">
-							<input type="hidden" name="cohortID" value=${cohort.getName() }>
-			              <label for="exampleInputEmail1" style="font-size: 15px;">Employee ID</label>
-			              <input type="number" class="form-control" name="empID" placeholder="Enter Employee ID" required>
-			
-			              <label for="exampleInputEmail1" style="font-size: 15px;">First Name</label>
-			              <input type="text" class="form-control" name="fname" placeholder="Enter First Name" required>
-			
-			              <label for="exampleInputEmail1" style="font-size: 15px;">Last Name</label>
-			              <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" required>
-			
-			              <label for="exampleInputEmail1" style="font-size: 15px;">Email Address</label>
-			              <input type="email" class="form-control" name="email" placeholder="Enter Email address" required>
-			              
-			              <div class="text-right mt-3">
-			                  <button type="submit" class="btn btn-primary">Add Member</button>
-			              </div>
-		          	  </form>		      		
-			      </div>
-			    </div>
-			  </div>
+			<div class="modal fade" id="addMemberModal" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Add Member
+								${cohort.getName() }</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body text-left">
+							<form method="post" action="/add-member">
+								<input type="hidden" name="cohortID" value=${cohort.getName() }>
+								<label for="exampleInputEmail1" style="font-size: 15px;">Employee
+									ID</label> <input type="number" class="form-control" name="empID"
+									placeholder="Enter Employee ID" required> <label
+									for="exampleInputEmail1" style="font-size: 15px;">First
+									Name</label> <input type="text" class="form-control" name="fname"
+									placeholder="Enter First Name" required> <label
+									for="exampleInputEmail1" style="font-size: 15px;">Last
+									Name</label> <input type="text" class="form-control" name="lname"
+									placeholder="Enter Last Name" required> <label
+									for="exampleInputEmail1" style="font-size: 15px;">Email
+									Address</label> <input type="email" class="form-control" name="email"
+									placeholder="Enter Email address" required>
+
+								<div class="text-right mt-3">
+									<button type="submit" class="btn btn-primary">Add
+										Member</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		
+
 		<!-- Show basic information -->
-		<small class="font-weight-light" style="font-size: 20px;">
-			<p style="margin:0; padding:0;">Cohort ID - ${cohort.getName() }</p>
-			<p style="margin:0; padding:0;">Cohort Description - ${cohort.getDescription() }</p>
-			<p style="margin:0; padding:0;">Cohort Start Date - ${cohort.getStartdate() }</p>
+		<small class="" style="font-size: 15px;">
+			<p style="margin: 0; padding: 0;">${cohort.getName() }-
+				${cohort.getDescription() }</p>
+			<p style="margin: 0; padding: 0;">Cohort Start Date -
+				${cohort.getStartdate() }</p>
 		</small>
 		<hr>
-		
-		
+
+
 		<!-- Show SME, Mentor, Coach and Trainer -->
 		<div class="container-fluid py-2">
-	        <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
-	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-	              <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getSME().getFullName()} (SME)</p>
-	              <button onclick="location.href='/view-profile?username=${cohort.getSME().getUsername()}'" class="btn btn-success btn-sm mb-3">view profile</button>
-	            </div>
+			<div
+				class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-3">
+				<div class="pt-2 px-2 mr-2 bg-white text-center rounded">
+					<img src="/resources/img/profile-user.png" class="img-responsive"
+						style="width: 50px; height: 50px;">
+					<p style="font-size: 15px;" class="text-center mt-2">${cohort.getSME().getFullName()}
+						(SME)</p>
+					<button
+						onclick="location.href='/view-profile?username=${cohort.getSME().getUsername()}'"
+						class="btn btn-success btn-sm mb-3">view profile</button>
+				</div>
+
+				<div class="pt-2 px-2 mr-2 bg-white text-center rounded">
+					<img src="/resources/img/profile-user.png" class="img-responsive"
+						style="width: 50px; height: 50px;">
+					<p style="font-size: 15px;" class="text-center mt-2">${cohort.getMentor().getFullName()}
+						(Mentor)</p>
+					<button
+						onclick="location.href='/view-profile?username=${cohort.getMentor().getUsername()}'"
+						class="btn btn-success btn-sm mb-3">view profile</button>
+				</div>
+
+				<div class="pt-2 px-2 mr-2 bg-white text-center rounded">
+					<img src="/resources/img/profile-user.png" class="img-responsive"
+						style="width: 50px; height: 50px;">
+					<p style="font-size: 15px;" class="text-center mt-2">${cohort.getCoach().getFullName()}
+						(Coach)</p>
+					<button
+						onclick="location.href='/view-profile?username=${cohort.getCoach().getUsername()}'"
+						class="btn btn-success btn-sm mb-3">view profile</button>
+				</div>
+
+				<div class="pt-2 px-2 mr-2 bg-white text-center rounded">
+					<img src="/resources/img/profile-user.png" class="img-responsive"
+						style="width: 50px; height: 50px;">
+					<p style="font-size: 15px;" class="text-center mt-2">${cohort.getTrainer().getFullName()}
+						(Trainer)</p>
+					<button
+						onclick="location.href='/view-profile?username=${cohort.getTrainer().getUsername()}'"
+						class="btn btn-success btn-sm mb-3">view profile</button>
+				</div>
+			</div>
+		</div>
+
+		<br>
+
+		<p style="font-size: 15px; margin: 0; padding: 0;" class="ml-3">Members</p>
+		<div class="container-fluid py-2">
+			<div
+				class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-3">
+				
+				<c:forEach var="user" items="${allMembers}">
+		            <div class="pt-2 px-2 mr-2 bg-white text-center rounded">
+		              <img src="/resources/img/profile-user.png"
+							class="img-responsive" style="width: 50px; height: 50px;">
+		              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
+		              <button onclick="location.href=''"
+							class="btn btn-success btn-sm mb-3">view profile</button>
+		            </div>
 	            
-	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-	              <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getMentor().getFullName()} (Mentor)</p>
-	              <button onclick="location.href='/view-profile?username=${cohort.getMentor().getUsername()}'" class="btn btn-success btn-sm mb-3">view profile</button>
-	            </div>
-	            
-	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-	              <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getCoach().getFullName()} (Coach)</p>
-	              <button onclick="location.href='/view-profile?username=${cohort.getCoach().getUsername()}'" class="btn btn-success btn-sm mb-3">view profile</button>
-	            </div>
-	            
-	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-	              <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getTrainer().getFullName()} (Trainer)</p>
-	              <button onclick="location.href='/view-profile?username=${cohort.getTrainer().getUsername()}'" class="btn btn-success btn-sm mb-3">view profile</button>
-	            </div>
-	        </div>
+			</c:forEach>
+
+		</div>
       	</div>
       	
-      	<br>
+      	<hr>
       	
-      	
-		<p class="text-center text-success" style="font-size: 20px;">Cohort Members</p>
+		<p class="text-center text-success" style="font-size: 20px;">Meetings</p>
 		<table class="table table-striped" style="font-size: 15px;">
 			<thead>
 				<tr>
 					<th scope="col">S.No.</th>
-					<th scope="col">Employee ID</th>
 					<th scope="col">Name</th>
-					<th scope="col">Email</th>
+					<th scope="col">Start Time</th>
+					<th scope="col">End Time</th>
+					<th scope="col">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="user" items="${allMembers}" varStatus="theCount">
+				<c:forEach var="meeting" items="${allMeetings}" varStatus="theCount">
 					<tr>
 						<td>${theCount.count}</td>
-						<td>${user.getUsername() }</td>
-						<td>${user.getFullName() }</td>
-						<td>${user.getPersonalEmail() }</td>
+						<td>${meeting.getMeetingName() }</td>
+						<td>${meeting.getStartDateTime() }</td>
+						<td>${meeting.getEndDateTime() }</td>
+						<%
+							Meeting meeting = (Meeting) pageContext.getAttribute("meeting");
+							
+							if(meeting.getCreatedBy().equals(user.getUsername())){
+								out.print("<td><a href=\"#\">Edit</a> | <a href=\"#\">Delete</a></td>");
+							} else{
+								out.print("<td><a target=\"_blank\" href=${meeting.getMeetingURL() }>Join now</a></td>");
+							}
+						%>
 					</tr>
 	            </c:forEach>
 			</tbody>

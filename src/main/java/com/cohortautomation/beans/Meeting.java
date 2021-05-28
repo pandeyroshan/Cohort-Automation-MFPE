@@ -8,17 +8,18 @@ public class Meeting {
 	private String meetingURL;
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
-	private Cohort cohort;
+	private String cohortID;
+	private String createdBy;
 
 	public Meeting(String meetingName, String meetingAgenda, String meetingURL, LocalDateTime startDateTime,
-			LocalDateTime endDateTime, Cohort cohort) {
+			LocalDateTime endDateTime, String cohortID) {
 		super();
 		this.meetingName = meetingName;
 		this.meetingAgenda = meetingAgenda;
 		this.meetingURL = meetingURL;
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
-		this.cohort = cohort;
+		this.cohortID = cohortID;
 	}
 
 	public String getMeetingName() {
@@ -61,18 +62,26 @@ public class Meeting {
 		this.endDateTime = endDateTime;
 	}
 
-	public Cohort getCohort() {
-		return cohort;
+	public String getCohortID() {
+		return cohortID;
 	}
 
-	public void setCohort(Cohort cohort) {
-		this.cohort = cohort;
+	public void setCohortID(String cohortID) {
+		this.cohortID = cohortID;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	@Override
 	public String toString() {
 		return "Meeting [meetingName=" + meetingName + ", meetingAgenda=" + meetingAgenda + ", meetingURL=" + meetingURL
-				+ ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime + ", cohort=" + cohort + "]";
+				+ ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime + ", cohortID=" + cohortID + "]";
 	}
 	
 	

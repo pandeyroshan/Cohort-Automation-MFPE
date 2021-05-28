@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.dao.CohortDAO;
+import com.cohortautomation.dao.MeetingDAO;
 import com.cohortautomation.dao.UserDAO;
 import com.cohortautomation.utilities.UserUtility;
 
@@ -31,6 +32,7 @@ public class CohortController {
 			model.addObject("allCoach", UserDAO.getAllCoach());
 			model.addObject("allTrainer", UserDAO.getAllTrainer());
 			model.addObject("allMembers", CohortDAO.getAllMembersForCohort(cohortId));
+			model.addObject("allMeetings", MeetingDAO.getAllMeetingForCohort(cohortId));
 			return model;
 		} else {
 			session.setAttribute("nextUrl", "/view-cohort?cohortID="+requestData.get("cohortID"));

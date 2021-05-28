@@ -283,7 +283,6 @@ public class AdminController {
 		cohort.setSME(SME);
 
 		boolean updateCohort = CohortDAO.updateCohort(oldCohortId, cohort);
-		System.out.println("\n\n\n\n" + updateCohort + "\n\n\n\n");
 
 		ModelAndView model = new ModelAndView("redirect:/all-cohort");
 		return model;
@@ -307,8 +306,6 @@ public class AdminController {
 
 		boolean updateProfile = UserDAO.updateProfile(employeeID, firstName, lastName, email);
 
-		System.out.println(updateProfile);
-
 		ModelAndView model = new ModelAndView("redirect:/view-profile?username=" + employeeID);
 		return model;
 	}
@@ -318,7 +315,6 @@ public class AdminController {
 		String employeeId = request.get("username");
 
 		boolean result = UserDAO.deleteProfile(employeeId);
-		System.out.println("\n\n\n\n"+result+"\n\n\n\n");
 
 		ModelAndView model = new ModelAndView("redirect:/");
 
