@@ -3,6 +3,7 @@ package com.cohortautomation.beans;
 import java.time.LocalDateTime;
 
 public class Meeting {
+	private int id;
 	private String meetingName;
 	private String meetingAgenda;
 	private String meetingURL;
@@ -11,9 +12,10 @@ public class Meeting {
 	private String cohortID;
 	private String createdBy;
 
-	public Meeting(String meetingName, String meetingAgenda, String meetingURL, LocalDateTime startDateTime,
+	public Meeting(int id, String meetingName, String meetingAgenda, String meetingURL, LocalDateTime startDateTime,
 			LocalDateTime endDateTime, String cohortID) {
 		super();
+		this.id = id;
 		this.meetingName = meetingName;
 		this.meetingAgenda = meetingAgenda;
 		this.meetingURL = meetingURL;
@@ -21,6 +23,18 @@ public class Meeting {
 		this.endDateTime = endDateTime;
 		this.cohortID = cohortID;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 
 	public String getMeetingName() {
 		return meetingName;

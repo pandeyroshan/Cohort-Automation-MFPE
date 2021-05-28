@@ -11,20 +11,20 @@ import com.cohortautomation.beans.Meeting;
 import com.cohortautomation.beans.User;
 
 public class MeetingDAO {
-	
+
 	// return all the meeting create by a user
 	public static List<Meeting> getMyMeeting(String createdBy) {
 		Connection con = DBConnection.getConnection();
 		List<Meeting> meetingList = new ArrayList<Meeting>();
 		try {
 			PreparedStatement stmt = con.prepareStatement(
-					"select meeting_link, start_datetime, end_datetime, heading, cohort from meeting where created_by=?");
+					"select meeting_link, start_datetime, end_datetime, heading, cohort, id from meeting where created_by=?");
 			stmt.setString(1, createdBy);
 
 			ResultSet result = stmt.executeQuery();
 
 			while (result.next()) {
-				Meeting meeting = new Meeting(result.getString(4), "", result.getString(1),
+				Meeting meeting = new Meeting(result.getInt(6), result.getString(4), "", result.getString(1),
 						result.getTimestamp(2).toLocalDateTime(), result.getTimestamp(3).toLocalDateTime(),
 						result.getString(5));
 				meeting.setCreatedBy(createdBy);
@@ -43,20 +43,20 @@ public class MeetingDAO {
 		}
 		return null;
 	}
-	
+
 	// returns all the meeting for a cohort
 	public static List<Meeting> getAllMeetingForCohort(String cohortId) {
 		Connection con = DBConnection.getConnection();
 		List<Meeting> meetingList = new ArrayList<Meeting>();
 		try {
 			PreparedStatement stmt = con.prepareStatement(
-					"select meeting_link, start_datetime, end_datetime, heading, created_by from meeting where cohort=?");
+					"select meeting_link, start_datetime, end_datetime, heading, created_by, id from meeting where cohort=?");
 			stmt.setString(1, cohortId);
 
 			ResultSet result = stmt.executeQuery();
 
 			while (result.next()) {
-				Meeting meeting = new Meeting(result.getString(4), "", result.getString(1),
+				Meeting meeting = new Meeting(result.getInt(6), result.getString(4), "", result.getString(1),
 						result.getTimestamp(2).toLocalDateTime(), result.getTimestamp(3).toLocalDateTime(), cohortId);
 				meeting.setCreatedBy(result.getString(5));
 				meetingList.add(meeting);
@@ -106,6 +106,31 @@ public class MeetingDAO {
 				e.printStackTrace();
 			}
 		}
+		return false;
+	}
+
+	public static boolean deleteMeeting(String meetingId) {
+		Connection con = DBConnection.getConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement("delete from meeting where id=?");
+			stmt.setInt(1, Integer.parseInt(meetingId));
+
+			int result = stmt.executeUpdate();
+			if (result > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 		return false;
 	}
 }

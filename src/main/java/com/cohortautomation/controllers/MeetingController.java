@@ -37,7 +37,7 @@ public class MeetingController {
 		
 		String meetingLink = request.get("meetingLink");
 		
-		Meeting meeting = new Meeting(meetingName, "", meetingLink, startDatetime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), endDatetime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), cohortId);
+		Meeting meeting = new Meeting(0, meetingName, "", meetingLink, startDatetime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), endDatetime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), cohortId);
 		meeting.setCreatedBy(username);
 		
 		MeetingDAO.createMeeting(meeting);
@@ -60,5 +60,15 @@ public class MeetingController {
 			session.setAttribute("nextUrl", "/my-meetings");
 			return new ModelAndView("redirect:/login");
 		}
+	}
+	
+	@RequestMapping(value="/delete-meeting", method=RequestMethod.GET)
+	public ModelAndView deleteMeeting(@RequestParam Map<String, String> request, HttpSession session) {
+		String meetingId = request.get("meetingId");
+		String cohortId = request.get("cohortId");
+		MeetingDAO.deleteMeeting(meetingId);
+		
+		ModelAndView model = new ModelAndView("redirect:/view-cohort?cohortID="+cohortId);
+		return model;
 	}
 }

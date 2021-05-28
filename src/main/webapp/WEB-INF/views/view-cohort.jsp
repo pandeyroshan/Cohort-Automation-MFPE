@@ -502,7 +502,7 @@ a {
 							Meeting meeting = (Meeting) pageContext.getAttribute("meeting");
 							
 							if(meeting.getCreatedBy().equals(user.getUsername())){
-								out.print("<td><a href=\"#\">Edit</a> | <a href=\"#\">Delete</a></td>");
+								out.print("<td><a href=\"#\">Edit</a> | <a href=\"/delete-meeting?meetingId="+meeting.getId()+"&cohortId="+meeting.getCohortID()+"\">Delete</a></td>");
 							} else{
 								out.print("<td><a target=\"_blank\" href=${meeting.getMeetingURL() }>Join now</a></td>");
 							}
