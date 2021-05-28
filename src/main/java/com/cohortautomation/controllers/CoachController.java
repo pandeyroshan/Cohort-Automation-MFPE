@@ -18,38 +18,6 @@ import com.cohortautomation.utilities.UserUtility;
 
 @Controller
 public class CoachController {
-
-	@RequestMapping(value="my-cohort", method=RequestMethod.GET)
-	public ModelAndView showMyCohort(HttpSession session) {
-		if(UserUtility.isAuthenticated(session)) {
-			User user = (User) session.getAttribute("user");
-			ModelAndView model = new ModelAndView("coach-my-cohort");
-			model.addObject("allCohorts", CohortDAO.getAllCohortsForCoach(user));
-			return model;
-		} else {
-			session.setAttribute("nextUrl", "/my-cohort");
-			return new ModelAndView("redirect:/login");
-		}
-	}
-	
-	@RequestMapping(value="coach-view-cohort", method=RequestMethod.GET)
-	public ModelAndView viewCohort(@RequestParam Map<String, String> request, HttpSession session) {
-		String cohortId = request.get("cohortId");
-		ModelAndView model = new ModelAndView("coach-view-cohort");
-		return model;
-	}
-	
-	@RequestMapping(value="my-meeting", method=RequestMethod.GET)
-	public ModelAndView showMyMeeting(HttpSession session) {
-		ModelAndView model = new ModelAndView("coach-my-meeting");
-		return model;
-	}
-	
-	@RequestMapping(value="my-survey", method=RequestMethod.GET)
-	public ModelAndView showMySurvey(HttpSession session) {
-		ModelAndView model = new ModelAndView("coach-my-survey");
-		return model;
-	}
 	
 	@RequestMapping(value="add-member", method=RequestMethod.POST)
 	public ModelAndView addMember(@RequestParam Map<String, String> request, HttpSession session) {
