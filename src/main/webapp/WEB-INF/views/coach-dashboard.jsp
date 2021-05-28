@@ -131,10 +131,10 @@
       <div class="text-left pl-5 pt-3 pr-5">
         <p class="myNavLink" ><strong>Homepage</strong></p>
         <p class="myNavLink" onclick="location.href='/my-cohort'">Cohorts</p>
-        <p class="myNavLink" onclick="location.href='/all-sme'">Meetings</p>
-        <p class="myNavLink" onclick="location.href='/all-mentor'">Surveys</p>
+        <p class="myNavLink" onclick="location.href=''">Meetings</p>
+        <p class="myNavLink" onclick="location.href=''">Surveys</p>
         <hr>
-        <p class="myNavLink" onclick="location.href='/admin-change-password'">Change Password</p>
+        <p class="myNavLink" onclick="location.href=''">Change Password</p>
         <p class="myNavLink">My Profile</p>
       </div>
 

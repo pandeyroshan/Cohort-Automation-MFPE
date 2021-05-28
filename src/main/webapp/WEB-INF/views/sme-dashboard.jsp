@@ -149,6 +149,36 @@
         <a href="/logout"><img src="/resources/img/logout.png" class="mt-1" style="width: 15px; height: 15px;"></a>
       </div>
       
+      <p class="cohort-label ml-3" style="font-size: 20px">Cohorts</p>
+      <div class="container-fluid py-2">
+        <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
+			
+			<c:forEach var="cohort" items="${allCohort}">
+	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
+	              <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
+	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getName() }</p>
+	              <button onclick="location.href='/view-cohort?cohortID=${cohort.getName()}'" class="btn btn-success btn-sm mb-3">view cohort</button>
+	            </div>
+            </c:forEach>
+
+        </div>
+      </div>
+      
+      <p class="cohort-label ml-3" style="font-size: 20px">Meetings</p>
+      <div class="container-fluid py-2">
+        <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
+			
+			<c:forEach var="meeting" items="${allMeetings}">
+	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
+	              <img src="/resources/img/round-table.png" class="img-responsive" style="width: 50px; height: 50px;">
+	              <p style="font-size: 15px;" class="text-center mt-2">${meeting.getMeetingName() }</p>
+	              <button onclick="location.href='/view-cohort?cohortID=${meeting.getMeetingName()}'" class="btn btn-success btn-sm mb-3">Join Now</button>
+	            </div>
+            </c:forEach>
+
+        </div>
+      </div>
+      
       
 
 	  <div class="text-right">

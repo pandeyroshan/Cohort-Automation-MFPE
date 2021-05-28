@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.beans.User;
 import com.cohortautomation.dao.CohortDAO;
+import com.cohortautomation.dao.MeetingDAO;
 import com.cohortautomation.dao.UserDAO;
 
 public class UserUtility {
@@ -31,6 +32,8 @@ public class UserUtility {
 			return model;
 		} else if(user.isSME()) {
 			ModelAndView model = new ModelAndView("sme-dashboard");
+			model.addObject("allCohort", CohortDAO.getAllCohortsForSME(user));
+			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
 			return model;
 		} else if(user.isMentor()) {
 			ModelAndView model = new ModelAndView("mentor-dashboard");

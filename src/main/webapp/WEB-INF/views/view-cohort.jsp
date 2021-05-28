@@ -129,6 +129,7 @@ p.cohort-label {
 
 a {
 	text-decoration: none;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -160,7 +161,7 @@ a {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-coach'\">Coaches</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-trainer'\">Trainer</p>");
 				} else if(user.isSME()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Cohorts</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Survey</p>");
@@ -172,8 +173,8 @@ a {
 				} else if(user.isCoach()){
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\"><strong>Cohorts</strong></p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Surveys</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else if(user.isTrainer()){
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
@@ -502,11 +503,33 @@ a {
 							Meeting meeting = (Meeting) pageContext.getAttribute("meeting");
 							
 							if(meeting.getCreatedBy().equals(user.getUsername())){
-								out.print("<td><a href=\"#\">Edit</a> | <a href=\"/delete-meeting?meetingId="+meeting.getId()+"&cohortId="+meeting.getCohortID()+"\">Delete</a></td>");
+								out.print("<td><a data-toggle=\"modal\" data-target=\"#viewMeetingModal"+meeting.getId()+"\" >View</a> | <a href=\"/delete-meeting?meetingId="+meeting.getId()+"&cohortId="+meeting.getCohortID()+"\">Delete</a></td>");
 							} else{
-								out.print("<td><a target=\"_blank\" href=${meeting.getMeetingURL() }>Join now</a></td>");
+								out.print("<td><a target=\"_blank\" href="+meeting.getMeetingURL()+">Join now</a></td>");
 							}
 						%>
+						
+						<div class="modal fade" id="viewMeetingModal${meeting.getId() }" tabindex="-1" role="dialog" aria-labelledby="viewMeetingModal${meeting.getId() }" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">
+											Meeting - ${meeting.getMeetingName() }</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body text-left">
+										<small style="font-size: 15px; margin:0; padding:0;">
+											<p>Start Time - ${meeting.getStartDateTime() }</p>
+											<p>End Time - ${meeting.getEndDateTime() }</p>
+											<p>Joining Link - ${meeting.getMeetingURL() } - <a target="_blank" href=${meeting.getMeetingURL() }>Click here to join</a></p>
+										</small>
+									</div>
+								</div>
+							</div>
+						</div>
 					</tr>
 	            </c:forEach>
 			</tbody>
