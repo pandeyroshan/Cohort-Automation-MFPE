@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cohortautomation.beans.Cohort;
+import com.cohortautomation.beans.User;
 import com.cohortautomation.dao.CohortDAO;
 import com.cohortautomation.dao.MeetingDAO;
 import com.cohortautomation.dao.UserDAO;
@@ -40,4 +41,25 @@ public class CohortController {
 		}
 	}
 	
+	@RequestMapping(value="/my-cohorts", method=RequestMethod.GET)
+	public ModelAndView myCohort(@RequestParam Map<String, String> requestData,
+			HttpSession session) {
+		if(UserUtility.isAuthenticated(session)) {
+			User user = (User) session.getAttribute("user");
+			ModelAndView model = new ModelAndView("my-cohorts");
+			if(user.isSME()) {
+				model.addObject("allCohorts", CohortDAO.getAllCohortsForSME(user));
+			} else if(user.isMentor()) {
+				model.addObject("allCohorts", CohortDAO.getAllCohortsForMentor(user));
+			} else if(user.isCoach()) {
+				model.addObject("allCohorts", CohortDAO.getAllCohortsForCoach(user));
+			} else if(user.isTrainer()) {
+				model.addObject("allCohorts", CohortDAO.getAllCohortsForTrainer(user));
+			}
+			return model;
+		} else {
+			session.setAttribute("nextUrl", "/my-cohorts");
+			return new ModelAndView("redirect:/login");
+		}
+	}
 }

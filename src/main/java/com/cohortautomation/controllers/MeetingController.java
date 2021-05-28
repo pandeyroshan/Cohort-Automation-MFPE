@@ -53,7 +53,7 @@ public class MeetingController {
 			User user = (User) session.getAttribute("user");
 			List<Meeting> myMeeting = MeetingDAO.getMyMeeting(user.getUsername());
 			
-			ModelAndView model = new ModelAndView("my-meeting");
+			ModelAndView model = new ModelAndView("my-meetings");
 			model.addObject("myMeeting", myMeeting);
 			return model;
 		} else {

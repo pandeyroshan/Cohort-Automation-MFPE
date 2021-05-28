@@ -130,8 +130,8 @@
 
       <div class="text-left pl-5 pt-3 pr-5">
         <p class="myNavLink" onclick="location.href='/'">Homepage</p>
-        <p class="myNavLink" onclick="location.href=''"><strong>Cohorts</strong></p>
-        <p class="myNavLink" onclick="location.href=''">Meetings</p>
+        <p class="myNavLink" onclick="location.href='/my-cohorts'"><strong>Cohorts</strong></p>
+        <p class="myNavLink" onclick="location.href='/my-meetings'">Meetings</p>
         <p class="myNavLink" onclick="location.href=''">Surveys</p>
         <hr>
         <p class="myNavLink" onclick="location.href=''">Change Password</p>

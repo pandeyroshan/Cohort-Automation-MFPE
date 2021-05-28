@@ -40,10 +40,13 @@ public class UserUtility {
 			return model;
 		} else if(user.isTrainer()) {
 			ModelAndView model = new ModelAndView("trainer-dashboard");
+			model.addObject("allCohort", CohortDAO.getAllCohortsForTrainer(user));
+			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
 			return model;
 		} else if(user.isCoach()) {
 			ModelAndView model = new ModelAndView("coach-dashboard");
 			model.addObject("allCohort", CohortDAO.getAllCohortsForCoach(user));
+			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
 			return model;
 		} else if(user.isMember()) {
 			ModelAndView model = new ModelAndView("member-dashboard");

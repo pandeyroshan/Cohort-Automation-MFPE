@@ -130,8 +130,8 @@
 
       <div class="text-left pl-5 pt-3 pr-5">
       	<p class="myNavLink" ><strong>Homepage</strong></p>
-        <p class="myNavLink" onclick="location.href=''">Cohorts</p>
-        <p class="myNavLink" onclick="location.href=''">Meetings</p>
+        <p class="myNavLink" onclick="location.href='/my-cohorts'">Cohorts</p>
+        <p class="myNavLink" onclick="location.href='/my-meetings'">Meetings</p>
         <p class="myNavLink" onclick="location.href=''">Surveys</p>
         <hr>
         <p class="myNavLink" onclick="location.href='/admin-change-password'">Change Password</p>
@@ -148,7 +148,8 @@
         <span style="font-size: 15px" class="mr-2">Welcome ${user.getUsername() }</span>
         <a href="/logout"><img src="/resources/img/logout.png" class="mt-1" style="width: 15px; height: 15px;"></a>
       </div>
-
+      
+      
       <p class="cohort-label ml-3" style="font-size: 20px">Cohorts</p>
       <div class="container-fluid py-2">
         <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
@@ -157,70 +158,27 @@
 	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
 	              <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
 	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getName() }</p>
-	              <button class="btn btn-success btn-sm mb-3">view cohort</button>
+	              <button onclick="location.href='/view-cohort?cohortID=${cohort.getName()}'" class="btn btn-success btn-sm mb-3">view cohort</button>
 	            </div>
             </c:forEach>
 
         </div>
       </div>
-
-      <p class="cohort-label ml-3" style="font-size: 20px">SMEs</p>
+      
+      <p class="cohort-label ml-3" style="font-size: 20px">Meetings</p>
       <div class="container-fluid py-2">
         <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
-
-		<c:forEach var="user" items="${allSME}">
-            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-              <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
-              <button class="btn btn-success btn-sm mb-3">view profile</button>
-            </div>
-        </c:forEach>
+			
+			<c:forEach var="meeting" items="${allMeetings}">
+	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
+	              <img src="/resources/img/round-table.png" class="img-responsive" style="width: 50px; height: 50px;">
+	              <p style="font-size: 15px;" class="text-center mt-2">${meeting.getMeetingName() }</p>
+	              <button onclick="location.href='/view-cohort?cohortID=${meeting.getMeetingName()}'" class="btn btn-success btn-sm mb-3">Join Now</button>
+	            </div>
+            </c:forEach>
 
         </div>
       </div>
-
-      <p class="cohort-label ml-3" style="font-size: 20px">Mentors</p>
-      <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
-		  
-		  <c:forEach var="user" items="${allMentor}">
-            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-              <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
-              <button class="btn btn-success btn-sm mb-3">view profile</button>
-            </div>
-		  </c:forEach>
-        </div>
-      </div>
-
-      <p class="cohort-label ml-3" style="font-size: 20px">Coaches</p>
-      <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
-
-		  <c:forEach var="user" items="${allCoach}">
-            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-              <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
-              <button class="btn btn-success btn-sm mb-3">view profile</button>
-            </div>
-          </c:forEach>
-
-        </div>
-      </div>
-
-      <p class="cohort-label ml-3" style="font-size: 20px">Trainers</p>
-      <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
-		  <c:forEach var="user" items="${allTrainer}">
-            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-              <img src="/resources/img/profile-user.png" class="img-responsive" style="width: 50px; height: 50px;">
-              <p style="font-size: 15px;" class="text-center mt-2">${user.getFullName() }</p>
-              <button class="btn btn-success btn-sm mb-3">view profile</button>
-            </div>
-		  </c:forEach>
-        </div>
-      </div>
-
 	  <div class="text-right">
 	  	<p class="font-weight-light" style="font-size:15px;">Last Login: ${user.getLastLogin() }</p>
 	  </div>
