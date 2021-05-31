@@ -17,25 +17,19 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class SMEController {
 
-	@RequestMapping("/create-survey")
-	public ModelAndView showCreateSurvey(HttpSession session) {
-		ModelAndView model = new ModelAndView("sme-create-survey");
-		return model;
-	}
-
-	@RequestMapping(value = "/create-survey", method = RequestMethod.POST)
-	public ModelAndView createSurvey(@RequestParam Map<String, String> request, HttpSession session)
-			throws ParseException {
-
-		String surveyName = request.get("surveyName");
-
-		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-
-		Date startDate = (Date) formatter.parse(request.get("startDate"));
-		Date endDate = (Date) formatter.parse(request.get("endDate"));
-
-		ModelAndView model = new ModelAndView("redirect:/");
-		return model;
-	}
+//	@RequestMapping(value = "/create-survey", method = RequestMethod.POST)
+//	public ModelAndView createSurvey(@RequestParam Map<String, String> request, HttpSession session)
+//			throws ParseException {
+//
+//		String surveyName = request.get("surveyName");
+//
+//		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+//
+//		Date startDate = (Date) formatter.parse(request.get("startDate"));
+//		Date endDate = (Date) formatter.parse(request.get("endDate"));
+//
+//		ModelAndView model = new ModelAndView("redirect:/");
+//		return model;
+//	}
 
 }

@@ -154,7 +154,7 @@ a {
 				User user = (User) session.getAttribute("user");
 				
 				if(user.isAdmin()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-cohort'\">Cohorts</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-sme'\">SMEs</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-mentor'\">Mentors</p>");
@@ -178,13 +178,13 @@ a {
 				} else if(user.isTrainer()){
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Surveys</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Survey</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Survey</p>");
 				}
 			%>
 			<hr>

@@ -12,9 +12,9 @@ public class Survey {
 	private int createBy;
 	private LocalDateTime createAt;
 	private ArrayList<Question> questionsList;
-	private Cohort cohort;
+	private String cohort;
 
-	public Survey(String surveyName, LocalDateTime startDateTime, LocalDateTime endDateTime, int createBy, Cohort cohort) {
+	public Survey(String surveyName, LocalDateTime startDateTime, LocalDateTime endDateTime, int createBy, String cohort) {
 		super();
 		this.surveyName = surveyName;
 		this.startDateTime = startDateTime;
@@ -93,11 +93,11 @@ public class Survey {
 		questionsList.add(question);
 	}
 
-	public Cohort getCohort() {
+	public String getCohort() {
 		return cohort;
 	}
 
-	public void setCohort(Cohort cohort) {
+	public void setCohort(String cohort) {
 		this.cohort = cohort;
 	}
 

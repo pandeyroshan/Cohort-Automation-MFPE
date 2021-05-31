@@ -1,5 +1,5 @@
 <%@ page
-	import="com.cohortautomation.beans.User, com.cohortautomation.beans.Meeting"
+	import="com.cohortautomation.beans.User, com.cohortautomation.beans.Meeting, com.cohortautomation.beans.Cohort"
 	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -179,12 +179,12 @@ a {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\">Cohorts</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Surveys</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Surveys</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				}
 			%>
 			<hr>
@@ -228,15 +228,19 @@ a {
 		</small>
 		<div class="text-right">
 			<%
+				Cohort cohort = (Cohort) request.getAttribute("cohort");
 				if(user.isAdmin()){
 					out.print("<button class=\"btn btn-success mr-3\" data-toggle=\"modal\" data-target=\"#exampleModal\">Edit</button>");
 					out.print("<button onclick=\"location.href='/delete-cohort?cohortId=${cohort.getName()}'\" class=\"btn btn-danger\">Delete</button>");
 				} else if(user.isSME()){
 					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");
+					out.print("<a href=\"/create-survey?for="+cohort.getName()+"\"><button class=\"btn btn-success btn-sm mr-3\">Create Survey</button></a>");
 				} else if(user.isMentor()){
 					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");
+					out.print("<a href=\"/create-survey?for="+cohort.getName()+"\"><button class=\"btn btn-success btn-sm mr-3\">Create Survey</button></a>");
 				} else if(user.isCoach()){
 					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");
+					out.print("<a href=\"/create-survey?for="+cohort.getName()+"\"><button class=\"btn btn-success btn-sm mr-3\">Create Survey</button></a>");
 					out.print("<button data-toggle=\"modal\" data-target=\"#addMemberModal\" class=\"btn btn-success btn-sm\">Add Members</button>");
 				} else if(user.isTrainer()){
 					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");

@@ -10,6 +10,7 @@
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/SurveyResponseService.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/utilities/UserUtility.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/MeetingController.java
+/home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/SurveyDAO.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/HomepageController.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/utilities/MailService.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/NotificationController.java
@@ -24,6 +25,7 @@
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/SurveyService.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/UserService.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/AttendanceService.java
+/home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/SurveyController.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/beans/Attendance.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/UserDAO.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/CohortDAO.java

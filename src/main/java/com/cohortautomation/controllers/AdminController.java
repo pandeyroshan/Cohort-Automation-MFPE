@@ -51,11 +51,12 @@ public class AdminController {
 	@RequestMapping(value = "/create-cohort", method = RequestMethod.POST)
 	public String createCohort(@RequestParam Map<String, String> request, HttpSession session) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
 		String cohortCode = request.get("cohortCode");
 		Date startDate = null;
 		String cohortDesc = request.get("cohortDesc");
+		
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			startDate = sdf.parse(request.get("startDate"));
 		} catch (ParseException e) {
