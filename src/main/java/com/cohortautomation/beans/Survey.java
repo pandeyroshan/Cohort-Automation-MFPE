@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Survey {
+	private int id;
 	private String surveyName;
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
@@ -14,7 +15,8 @@ public class Survey {
 	private ArrayList<Question> questionsList;
 	private String cohort;
 
-	public Survey(String surveyName, LocalDateTime startDateTime, LocalDateTime endDateTime, int createBy, String cohort) {
+	public Survey(String surveyName, LocalDateTime startDateTime, LocalDateTime endDateTime, int createBy,
+			String cohort) {
 		super();
 		this.surveyName = surveyName;
 		this.startDateTime = startDateTime;
@@ -23,6 +25,14 @@ public class Survey {
 		this.createAt = java.time.LocalDateTime.now();
 		this.questionsList = new ArrayList<Question>();
 		this.cohort = cohort;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getSurveyName() {

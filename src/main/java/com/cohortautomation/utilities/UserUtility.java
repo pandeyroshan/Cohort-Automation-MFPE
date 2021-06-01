@@ -10,6 +10,7 @@ import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.beans.User;
 import com.cohortautomation.dao.CohortDAO;
 import com.cohortautomation.dao.MeetingDAO;
+import com.cohortautomation.dao.SurveyDAO;
 import com.cohortautomation.dao.UserDAO;
 
 public class UserUtility {
@@ -34,9 +35,13 @@ public class UserUtility {
 			ModelAndView model = new ModelAndView("sme-dashboard");
 			model.addObject("allCohort", CohortDAO.getAllCohortsForSME(user));
 			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
+			model.addObject("allSurveys", SurveyDAO.getMySurveys(user.getUsername()));
 			return model;
 		} else if(user.isMentor()) {
 			ModelAndView model = new ModelAndView("mentor-dashboard");
+			model.addObject("allCohort", CohortDAO.getAllCohortsForMentor(user));
+			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
+			model.addObject("allSurveys", SurveyDAO.getMySurveys(user.getUsername()));
 			return model;
 		} else if(user.isTrainer()) {
 			ModelAndView model = new ModelAndView("trainer-dashboard");
@@ -47,6 +52,7 @@ public class UserUtility {
 			ModelAndView model = new ModelAndView("coach-dashboard");
 			model.addObject("allCohort", CohortDAO.getAllCohortsForCoach(user));
 			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
+			model.addObject("allSurveys", SurveyDAO.getMySurveys(user.getUsername()));
 			return model;
 		} else if(user.isMember()) {
 			ModelAndView model = new ModelAndView("member-dashboard");
@@ -55,4 +61,3 @@ public class UserUtility {
 		return null;
 	}
 }
-// inserted a comment

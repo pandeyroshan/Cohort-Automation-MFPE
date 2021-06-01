@@ -59,7 +59,7 @@ public class SurveyController {
 				String QuestionText = request.get("text"+i);
 				String QuestionType = request.get("type"+i);
 				
-				Question question = new Question(QuestionText, QuestionType);
+				Question question = new Question(0,QuestionText, QuestionType);
 				
 				questionList.add(question);
 			}

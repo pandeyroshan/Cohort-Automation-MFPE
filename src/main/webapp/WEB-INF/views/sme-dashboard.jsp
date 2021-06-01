@@ -151,11 +151,11 @@
       
       <p class="cohort-label ml-3" style="font-size: 20px">Cohorts</p>
       <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
+        <div class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
 			
 			<c:forEach var="cohort" items="${allCohort}">
-	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-	              <img src="/resources/img/group.png" class="img-responsive" style="width: 50px; height: 50px;">
+	            <div class="pt-1 px-1 mr-1 bg-white text-center rounded">
+	              <img src="/resources/img/youth.png" class="img-responsive mt-2" style="width: 40px; height: 40px;">
 	              <p style="font-size: 15px;" class="text-center mt-2">${cohort.getName() }</p>
 	              <button onclick="location.href='/view-cohort?cohortID=${cohort.getName()}'" class="btn btn-success btn-sm mb-3">view cohort</button>
 	            </div>
@@ -166,11 +166,11 @@
       
       <p class="cohort-label ml-3" style="font-size: 20px">Meetings</p>
       <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-3 pb-2 pl-3 pr-3">
+        <div class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
 			
 			<c:forEach var="meeting" items="${allMeetings}">
-	            <div class="pt-3 px-3 mr-3 bg-white text-center rounded">
-	              <img src="/resources/img/round-table.png" class="img-responsive" style="width: 50px; height: 50px;">
+	            <div class="pt-1 px-1 mr-1 bg-white text-center rounded">
+	              <img src="/resources/img/round-table.png" class="img-responsive mt-2" style="width: 40px; height: 40px;">
 	              <p style="font-size: 15px;" class="text-center mt-2">${meeting.getMeetingName() }</p>
 	              <button onclick="location.href='/view-cohort?cohortID=${meeting.getMeetingName()}'" class="btn btn-success btn-sm mb-3">Join Now</button>
 	            </div>
@@ -179,9 +179,24 @@
         </div>
       </div>
       
+      <p class="cohort-label ml-3" style="font-size: 20px">Surveys</p>
+      <div class="container-fluid">
+        <div class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
+			
+			<c:forEach var="survey" items="${allSurveys}">
+	            <div class="pt-1 px-1 mr-1 bg-white text-center rounded">
+	              <img src="/resources/img/survey.png" class="img-responsive mt-2" style="width: 40px; height: 40px;">
+	              <p style="font-size: 15px;" class="text-center mt-2">${survey.getSurveyName() }</p>
+	              <button onclick="location.href='/view-survey?surveyID=${survey.getId()}'" class="btn btn-success btn-sm mb-3">View Survey</button>
+	            </div>
+            </c:forEach>
+
+        </div>
+      </div>
+      
       
 
-	  <div class="text-right">
+	  <div class="text-right fixed-bottom mr-3">
 	  	<p class="font-weight-light" style="font-size:15px;">Last Login: ${user.getLastLogin() }</p>
 	  </div>
     </div>

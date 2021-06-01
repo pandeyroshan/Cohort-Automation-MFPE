@@ -1,5 +1,6 @@
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/MeetingDAO.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/CoachController.java
+/home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/AttendanceDAO.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/beans/Survey.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/AuthenticationController.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/CohortService.java
