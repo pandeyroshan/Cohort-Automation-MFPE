@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cohortautomation.beans.User;
 import com.cohortautomation.dao.CohortDAO;
 import com.cohortautomation.dao.UserDAO;
-import com.cohortautomation.utilities.PasswordGenerator;
+import com.cohortautomation.utilities.PasswordUtil;
 import com.cohortautomation.utilities.UserUtility;
 
 @Controller
@@ -27,7 +27,7 @@ public class CoachController {
 		String lastName = request.get("lname");
 		String email = request.get("email");
 
-		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordUtil.getRandomPassword(8), firstName,
 				lastName, email);
 
 		user.setSME(false);

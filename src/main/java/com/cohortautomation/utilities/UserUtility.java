@@ -32,24 +32,24 @@ public class UserUtility {
 			model.addObject("allTrainer", UserDAO.getAllTrainer());
 			return model;
 		} else if(user.isSME()) {
-			ModelAndView model = new ModelAndView("sme-dashboard");
+			ModelAndView model = new ModelAndView("dashboard");
 			model.addObject("allCohort", CohortDAO.getAllCohortsForSME(user));
 			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
 			model.addObject("allSurveys", SurveyDAO.getMySurveys(user.getUsername()));
 			return model;
 		} else if(user.isMentor()) {
-			ModelAndView model = new ModelAndView("mentor-dashboard");
+			ModelAndView model = new ModelAndView("dashboard");
 			model.addObject("allCohort", CohortDAO.getAllCohortsForMentor(user));
 			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
 			model.addObject("allSurveys", SurveyDAO.getMySurveys(user.getUsername()));
 			return model;
 		} else if(user.isTrainer()) {
-			ModelAndView model = new ModelAndView("trainer-dashboard");
+			ModelAndView model = new ModelAndView("dashboard");
 			model.addObject("allCohort", CohortDAO.getAllCohortsForTrainer(user));
 			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
 			return model;
 		} else if(user.isCoach()) {
-			ModelAndView model = new ModelAndView("coach-dashboard");
+			ModelAndView model = new ModelAndView("dashboard");
 			model.addObject("allCohort", CohortDAO.getAllCohortsForCoach(user));
 			model.addObject("allMeetings", MeetingDAO.getMyMeeting(user.getUsername()));
 			model.addObject("allSurveys", SurveyDAO.getMySurveys(user.getUsername()));

@@ -424,4 +424,45 @@ public class UserDAO {
 		}
 		return false;
 	}
+	
+	public static String getOldPassword(String email) {
+		Connection con = DBConnection.getConnection();
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement("select password from user where personal_email = ?");
+			stmt.setString(1, email);
+			
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.next()) {
+				return result.getString(1);
+			}
+			return "";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
+	public static boolean changePassword(String email, String password) {
+		Connection con = DBConnection.getConnection();
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement("update user set password=? where personal_email=?");
+			stmt.setString(1, password);
+			stmt.setString(2, email);
+			
+			int result = stmt.executeUpdate();
+			
+			if(result>0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

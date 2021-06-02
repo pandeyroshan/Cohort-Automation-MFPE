@@ -22,8 +22,10 @@
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/beans/Cohort.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/SMEController.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/DBConnection.java
+/home/roshan/cohort-automation/src/main/java/com/cohortautomation/utilities/PasswordUtil.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/NotificationService.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/SurveyService.java
+/home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/TokenDAO.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/UserService.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/service/AttendanceService.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/SurveyController.java
@@ -31,6 +33,5 @@
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/UserDAO.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/dao/CohortDAO.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/beans/Meeting.java
-/home/roshan/cohort-automation/src/main/java/com/cohortautomation/utilities/PasswordGenerator.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/controllers/AdminController.java
 /home/roshan/cohort-automation/src/main/java/com/cohortautomation/beans/Answer.java

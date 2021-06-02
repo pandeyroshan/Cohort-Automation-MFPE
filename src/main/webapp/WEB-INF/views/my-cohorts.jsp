@@ -162,12 +162,12 @@ a {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-trainer'\">Trainer</p>");
 				} else if(user.isSME()){
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\"><strong>Cohorts</strong></p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else if(user.isMentor()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\"><strong>Cohorts</strong></p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else if(user.isCoach()){
@@ -177,9 +177,8 @@ a {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else if(user.isTrainer()){
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\"><strong>Cohorts</strong></p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");

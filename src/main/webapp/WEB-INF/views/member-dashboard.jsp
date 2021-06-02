@@ -13,107 +13,118 @@
 
     <title>Member Dashboard</title>
     <style>
-      body {
-        font-family: "Lato", sans-serif;
-      }
+body {
+	font-family: "Lato", sans-serif;
+}
 
-      .sidenav {
-        height: 100%;
-        width: 25%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #9BB0DA;
-        overflow-x: hidden;
-        padding-top: 20px;
-      }
+.sidenav {
+	height: 100%;
+	width: 25%;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #9BB0DA;
+	overflow-x: hidden;
+	padding-top: 20px;
+}
 
-      .sidenav a {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        display: block;
-      }
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	display: block;
+}
 
-      .sidenav a:hover {
-        color: #f1f1f1;
-      }
+.sidenav a:hover {
+	color: #f1f1f1;
+}
 
-      .main {
-        margin-left: 25%; /* Same as the width of the sidenav */
-        font-size: 28px; /* Increased text to enable scrolling */
-        padding: 0px 10px;
-      }
+.main {
+	margin-left: 25%; /* Same as the width of the sidenav */
+	font-size: 28px; /* Increased text to enable scrolling */
+	padding: 0px 10px;
+}
 
-      @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
-      }
-      .myFooter{
-        height: 50px; 
-        position: fixed; 
-        bottom:0%;
-        width:25%; 
-        background-color: #393838; 
-        opacity: 1;
-      }
-      div.scrollmenu {
-        background-color: #C4C4C4;
-        overflow: auto;
-        white-space: nowrap;
-      }
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
 
-      div.scrollmenu a {
-        display: inline-block;
-        color: white;
-        text-align: center;
-        padding: 14px;
-        text-decoration: none;
-      }
+.myFooter {
+	height: 50px;
+	position: fixed;
+	bottom: 0%;
+	width: 25%;
+	background-color: #393838;
+	opacity: 1;
+}
 
-      div.scrollmenu a:hover {
-        background-color: #777;
-      }
+div.scrollmenu {
+	background-color: #C4C4C4;
+	overflow: auto;
+	white-space: nowrap;
+}
 
-      span{
-        font-size: 20px;
-        margin-right: 5px;
-      }
-      p.cohort-label{
-        padding: 0;
-        margin: 0;
-      }
-      .card-body {
-        min-height: 300px;
-        min-width: 300px;
-        margin-right: 5px;
-      }
+div.scrollmenu a {
+	display: inline-block;
+	color: white;
+	text-align: center;
+	padding: 14px;
+	text-decoration: none;
+}
 
-      .main {
-        overflow:   scroll;
-      }
-      ::-webkit-scrollbar {
-          width: 0px;
-          background: transparent;
-      }
-      .myNavLink:hover{
-        font-weight: bold;
-        cursor: pointer;
-      }
-      .cohortClass{
-        cursor: pointer;
-        border: solid;
-        border-color: #C4C4C4;
-      }
-      .cohortClass:hover{
-        border-color: #fff;
-      }
-      a{
-        text-decoration: none;
+div.scrollmenu a:hover {
+	background-color: #777;
+}
 
-      }
+span {
+	font-size: 20px;
+	margin-right: 5px;
+}
 
-    </style>
+p.cohort-label {
+	padding: 0;
+	margin: 0;
+}
+
+.card-body {
+	min-height: 300px;
+	min-width: 300px;
+	margin-right: 5px;
+}
+
+.main {
+	overflow: scroll;
+}
+
+::-webkit-scrollbar {
+	width: 0px;
+	background: transparent;
+}
+
+.myNavLink:hover {
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.cohortClass {
+	cursor: pointer;
+	border: solid;
+	border-color: #C4C4C4;
+}
+
+.cohortClass:hover {
+	border-color: #fff;
+}
+
+a {
+	text-decoration: none;
+}
+</style>
   </head>
   <body>
     <div class="sidenav">

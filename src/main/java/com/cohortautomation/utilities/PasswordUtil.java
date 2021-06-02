@@ -1,6 +1,11 @@
 package com.cohortautomation.utilities;
 
-public class PasswordGenerator {
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class PasswordUtil {
 	public static String getRandomPassword(int length) {
 		char[] lowercaseAlphabets = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 		char[] upperaseAlphabets = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
@@ -25,5 +30,22 @@ public class PasswordGenerator {
 		}
 		
 		return password;
+	}
+	
+	public static String getHashedLinkForPasswordReset(String key) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		byte[] hash = md.digest(key.getBytes(StandardCharsets.UTF_8));
+		
+		BigInteger number = new BigInteger(1, hash);
+		StringBuilder hexString = new StringBuilder(number.toString(16));
+		
+		while (hexString.length() < 32) 
+        { 
+            hexString.insert(0, '0'); 
+        }
+		
+		System.out.println(hexString);
+		
+		return hexString.toString();
 	}
 }

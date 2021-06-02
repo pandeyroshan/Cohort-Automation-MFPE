@@ -1,5 +1,6 @@
 package com.cohortautomation.controllers;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -8,9 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cohortautomation.beans.User;
+import com.cohortautomation.dao.TokenDAO;
 import com.cohortautomation.dao.UserDAO;
+import com.cohortautomation.utilities.MailService;
+import com.cohortautomation.utilities.PasswordUtil;
+import com.cohortautomation.utilities.UserUtility;
 
 @Controller
 public class AuthenticationController {
@@ -58,7 +64,12 @@ public class AuthenticationController {
 	
 	@RequestMapping(value="/change-password", method=RequestMethod.GET)
 	public String showChangePasswordPage(HttpSession session) {
-		return "changePassword";
+		if(UserUtility.isAuthenticated(session)) {
+			return "change-password";
+		} else {
+			session.setAttribute("nextUrl", "/change-password");
+			return "redirect:/login";
+		}
 	}
 	
 	@RequestMapping(value="/change-password", method=RequestMethod.POST)
@@ -98,5 +109,55 @@ public class AuthenticationController {
 		}
 		
 		return "redirect:/change-password";
+	}
+
+	@RequestMapping(value="/forgot-password")
+	public String showForgotPasswordPage() {
+		return "forgot-password";
+	}
+	
+	@RequestMapping(value="/forgot-password", method=RequestMethod.POST)
+	public String ForgotPasswordPage(@RequestParam Map<String, String> request) {
+		String email = request.get("email");
+		
+		try {
+			String hashedLinkForPasswordReset = PasswordUtil.getHashedLinkForPasswordReset(UserDAO.getOldPassword(email));
+			// create a token with this string and send it to email address as well
+			TokenDAO.createToken(email, hashedLinkForPasswordReset);
+			MailService.sendPasswordResetLink(email, hashedLinkForPasswordReset);			
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		
+		return "link-sent";
+	}
+	
+	@RequestMapping(value="/reset-password", method=RequestMethod.GET)
+	public ModelAndView showResetPasswordPage(@RequestParam Map<String, String> request) {
+		String token = request.get("token");
+		
+		boolean isValid = TokenDAO.checkTokenValidity(token);
+		
+		System.out.println(isValid);
+		
+		if(isValid) {
+			ModelAndView model = new ModelAndView("reset-password");
+			model.addObject("token", token);
+			return model;
+		} else {
+			return new ModelAndView("invalid-token");
+		}
+	}
+	
+	@RequestMapping(value="/reset-password", method=RequestMethod.POST)
+	public ModelAndView resetPassword(@RequestParam Map<String, String> request) {
+		String token = request.get("token");
+		String password = request.get("password");
+		
+		String email = TokenDAO.getEmailFromToken(token);
+		
+		UserDAO.changePassword(email, password);
+		
+		return new ModelAndView("redirect:/login");
 	}
 }

@@ -177,9 +177,8 @@ a {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else if(user.isTrainer()){
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\">Cohorts</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\"><strong>Cohorts</strong></p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");

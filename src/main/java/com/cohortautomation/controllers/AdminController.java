@@ -17,7 +17,7 @@ import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.beans.User;
 import com.cohortautomation.dao.CohortDAO;
 import com.cohortautomation.dao.UserDAO;
-import com.cohortautomation.utilities.PasswordGenerator;
+import com.cohortautomation.utilities.PasswordUtil;
 
 @Controller
 public class AdminController {
@@ -125,7 +125,7 @@ public class AdminController {
 		String lastName = request.get("lname");
 		String email = request.get("email");
 
-		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordUtil.getRandomPassword(8), firstName,
 				lastName, email);
 
 		user.setSME(false);
@@ -152,7 +152,7 @@ public class AdminController {
 		String lastName = request.get("lname");
 		String email = request.get("email");
 
-		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordUtil.getRandomPassword(8), firstName,
 				lastName, email);
 
 		user.setSME(false);
@@ -179,7 +179,7 @@ public class AdminController {
 		String lastName = request.get("lname");
 		String email = request.get("email");
 
-		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordUtil.getRandomPassword(8), firstName,
 				lastName, email);
 
 		user.setSME(false);
@@ -206,7 +206,7 @@ public class AdminController {
 		String lastName = request.get("lname");
 		String email = request.get("email");
 
-		User user = new User(employeeID, String.valueOf(employeeID), PasswordGenerator.getRandomPassword(8), firstName,
+		User user = new User(employeeID, String.valueOf(employeeID), PasswordUtil.getRandomPassword(8), firstName,
 				lastName, email);
 
 		user.setSME(true);
@@ -223,7 +223,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin-change-password", method = RequestMethod.GET)
 	public ModelAndView showChangePasswordPage(HttpSession session) {
-		ModelAndView model = new ModelAndView("admin-change-password");
+		ModelAndView model = new ModelAndView("change-password");
 		return model;
 	}
 

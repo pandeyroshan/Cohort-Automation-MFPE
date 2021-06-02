@@ -18,7 +18,7 @@
 
       .sidenav {
         height: 100%;
-        width: 25%;
+        width: 30%;
         position: fixed;
         z-index: 1;
         top: 0;
@@ -39,7 +39,7 @@
       }
 
       .main {
-        margin-left: 25%; /* Same as the width of the sidenav */
+        margin-left: 30%; /* Same as the width of the sidenav */
         font-size: 28px; /* Increased text to enable scrolling */
         padding: 0px 10px;
       }
@@ -52,7 +52,7 @@
         height: 50px; 
         position: fixed; 
         bottom:0%;
-        width:25%; 
+        width:30%; 
         background-color: #393838; 
         opacity: 1;
       }
@@ -120,7 +120,7 @@
       </div>
 
       <div class="mt-5 text-center">
-        <img src="/resources/img/user.png" class="mb-3" style="width: 100px; height: 100px;">
+        <img src="/resources/img/login.svg" class="mb-3" style="width: 80%;">
         <p>Login here to proceed further  &#8594;</p>
       </div>
 
@@ -141,6 +141,8 @@
             
             <div class="text-center mt-3">
                 <button type="submit" class="btn btn-primary">Login Now</button>
+                <br>
+                <a href="/forgot-password" style="text-decoration: none;"><small style="font-size:15px;" class="text-muted">Forgot Password ?</small></a>
             </div>
         </form>
       </div>

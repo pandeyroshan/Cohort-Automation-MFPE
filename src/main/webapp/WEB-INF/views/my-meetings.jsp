@@ -166,7 +166,7 @@ a {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else if(user.isMentor()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\">Cohorts</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
@@ -176,10 +176,9 @@ a {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
 				} else if(user.isTrainer()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\"><strong>Meetings</strong></p>");
 				} else {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");

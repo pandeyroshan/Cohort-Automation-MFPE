@@ -62,17 +62,30 @@ public class MailService {
 		}
 	}
 	
+	public static void sendPasswordResetLink(String email, String token) {
+		setup();
+		
+		try {
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(from));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+
+			message.setSubject("Reset password link for Cohort Automation");
+			
+			message.setText("Hi,\n\n You have requested the password reset link for your account. Please follow link given below.\n\n"
+					+"Link: "+ "http://localhost:8080/reset-password?token="+token);
+			
+			Transport.send(message);
+		} catch (MessagingException mex) {
+			mex.printStackTrace();
+		}
+	}
+	
 	public static void sendMeetingAlert(Meeting meeting) {
 		// this function will send the meeting alerts
 	}
 	
 	public static void sendSurveyResponse(SurveyResponse surveyResponse) {
 		// this function will send the survey response filled by a user
-	}
-
-	public static void main(String[] args) {
-		User user = new User(909102, "909102", "Linux@123", "Roshan", "Pandey", "pandeyroshan556@gmail.com");
-
-		sendCredentials(user);
 	}
 }
