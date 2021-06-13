@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.beans.User;
+import com.cohortautomation.dao.AttendanceDAO;
 import com.cohortautomation.dao.CohortDAO;
 import com.cohortautomation.dao.MeetingDAO;
 import com.cohortautomation.dao.SurveyDAO;
@@ -56,6 +57,10 @@ public class UserUtility {
 			return model;
 		} else if(user.isMember()) {
 			ModelAndView model = new ModelAndView("member-dashboard");
+			model.addObject("isPresent", AttendanceDAO.isPresent(user.getUsername()));
+			session.setAttribute("cohort", CohortDAO.getMyCohort(user.getUsername()).getName());
+			model.addObject("myMeetings", MeetingDAO.getAllMeetingForCohort(CohortDAO.getMyCohort(user.getUsername()).getName()));
+			model.addObject("allSurveys", SurveyDAO.getSurveyForCohort(CohortDAO.getMyCohort(user.getUsername()).getName()));
 			return model;
 		}
 		return null;

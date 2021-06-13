@@ -113,9 +113,10 @@ public class Survey {
 
 	@Override
 	public String toString() {
-		return "Survey [surveyName=" + surveyName + ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime
-				+ ", isDisable=" + isDisable + ", totalResponse=" + totalResponse + ", createBy=" + createBy
-				+ ", createAt=" + createAt + "]";
+		return "Survey [id=" + id + ", surveyName=" + surveyName + ", startDateTime=" + startDateTime + ", endDateTime="
+				+ endDateTime + ", isDisable=" + isDisable + ", totalResponse=" + totalResponse + ", createBy="
+				+ createBy + ", createAt=" + createAt + ", questionsList=" + questionsList + ", cohort=" + cohort + "]";
 	}
-
+	
+	
 }

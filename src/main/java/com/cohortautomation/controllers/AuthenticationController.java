@@ -122,7 +122,7 @@ public class AuthenticationController {
 		
 		try {
 			String hashedLinkForPasswordReset = PasswordUtil.getHashedLinkForPasswordReset(UserDAO.getOldPassword(email));
-			// create a token with this string and send it to email address as well
+			// create a token with this string and send it to email address as well 
 			TokenDAO.createToken(email, hashedLinkForPasswordReset);
 			MailService.sendPasswordResetLink(email, hashedLinkForPasswordReset);			
 		} catch (NoSuchAlgorithmException e) {
@@ -137,8 +137,6 @@ public class AuthenticationController {
 		String token = request.get("token");
 		
 		boolean isValid = TokenDAO.checkTokenValidity(token);
-		
-		System.out.println(isValid);
 		
 		if(isValid) {
 			ModelAndView model = new ModelAndView("reset-password");
@@ -157,6 +155,8 @@ public class AuthenticationController {
 		String email = TokenDAO.getEmailFromToken(token);
 		
 		UserDAO.changePassword(email, password);
+		
+		TokenDAO.deleteToken(email);
 		
 		return new ModelAndView("redirect:/login");
 	}

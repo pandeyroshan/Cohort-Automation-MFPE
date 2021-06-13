@@ -87,4 +87,20 @@ public class TokenDAO {
 		
 		return "";
 	}
+	
+	public static boolean deleteToken(String email) {
+		Connection con = DBConnection.getConnection();
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement("delete from tokens where email = ?");
+			stmt.setString(1, email);
+			
+			boolean execute = stmt.execute();
+			
+			return execute;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

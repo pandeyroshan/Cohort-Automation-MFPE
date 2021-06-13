@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page import="com.cohortautomation.beans.Survey, java.util.*, com.cohortautomation.beans.Question" language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -12,7 +12,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <title>Member Dashboard</title>
+    <title>View Survey</title>
     <style>
 body {
 	font-family: "Lato", sans-serif;
@@ -152,7 +152,7 @@ a {
       </div>
 
       <div class="text-center p-3 myFooter" style="background-color: rgba(0, 0, 0, 0.2);">
-        <p class="mb-2">${cohort }</p>
+        <p class="mb-2">Member Dashboard</p>
       </div>
     </div>
 
@@ -162,49 +162,44 @@ a {
         <a href="/logout"><img src="/resources/img/logout.png" class="mt-1" style="width: 15px; height: 15px;"></a>
       </div>
       
-      <p>
-	
-	
+      <small class="font-weight-light text-secondary">
+      	<span
+			style="font-size: 15px;">
+			 <a href="/">Home</a> /
+		</span> 
+		<span style="font-size: 15px;">
+			 View Survey - ${survey.getSurveyName() }
+		</span>
+	  </small>
 	  
-	  <div class="text-right">
-	  	<c:choose>
-		  <c:when test="${isPresent}">
-		  	<button class="btn btn-secondary disabled btn-sm" data-toggle="tooltip" data-placement="top" title="You are marked present for today">Mark me Present</button>
-		  </c:when>
-		  <c:otherwise>
-		  	<a href="/mark-present"><button class="btn btn-success btn-sm">Mark me Present</button></a>
-		  </c:otherwise>
-		</c:choose>
-      </div>
-      
-      <p class="cohort-label ml-3" style="font-size: 20px">Meetings</p>
-      <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
-			
-			<c:forEach var="meeting" items="${myMeetings}">
-	            <div class="pt-1 px-1 mr-2 bg-white text-center rounded" style="width: 150px;">
-	              <img src="/resources/img/round-table.png" class="img-responsive mt-2" style="width: 40px; height: 40px;">
-	              <p style="font-size: 15px;" class="text-center mt-2">${meeting.getMeetingName() }</p>
-	              <button onclick="location.href='/view-cohort?cohortID=${meeting.getMeetingName()}'" class="btn btn-success btn-sm mb-3">Join Now</button>
-	            </div>
-            </c:forEach>
-
-        </div>
-      </div>
-      
-      <p class="cohort-label ml-3" style="font-size: 20px">Surveys</p>
-      <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
-			
-			<c:forEach var="survey" items="${allSurveys}">
-	            <div class="pt-1 px-1 mr-2 bg-white text-center rounded" style="width: 150px;" data-toggle="tooltip" data-placement="right" title="${survey.getSurveyName()}">
-	              <img src="/resources/img/round-table.png" class="img-responsive mt-2" style="width: 40px; height: 40px;">
-	              <p style="font-size: 15px;" class="text-center mt-2">${survey.getSurveyName().substring(0,15) }...</p>
-	              <button onclick="location.href='/view-survey/${survey.getId()}'" class="btn btn-success btn-sm mb-3">Open</button>
-	            </div>
-            </c:forEach>
-
-        </div>
+	  <p style="font-size: 15px;" class="text-danger">
+	  	Survey Deadline - ${survey.getEndDateTime() }
+	  </p>
+	  
+	  <div class="p-5 mt-3" style="background-color: #C4C4C4;">
+        <form method="post">
+        	<%
+        		Survey survey = (Survey) request.getAttribute("survey");
+        	
+        		List<Question> questionsList = survey.getQuestionsList();
+        		
+        		for(Question question: questionsList){
+        			out.print("<label style=\"font-size: 15px;\">"+question.getQuestionText()+"</label>");
+        			
+        			if(question.getQuestionType().equals("text")){
+        				out.print("<input type=\"text\" class=\"form-control\" placeholder=\"Answer here\">");
+        			} else if(question.getQuestionType().equals("number")){
+        				out.print("<input type=\"number\" class=\"form-control\" placeholder=\"Answer here\">");
+        			} else {
+        				out.print("<input type=\"date\" class=\"form-control\" placeholder=\"Answer here\">");
+        			}
+        		}
+        	%>
+            
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary">Submit Survey</button>
+            </div>
+        </form>
       </div>
 
 	  <div class="text-right fixed-bottom mr-3">

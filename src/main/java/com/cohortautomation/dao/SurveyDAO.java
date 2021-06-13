@@ -148,6 +148,7 @@ public class SurveyDAO {
 	public static Survey getSurvey(int id) {
 		Connection con = DBConnection.getConnection();
 		try {
+			System.out.println("INSIDE DAO: Searching for Survey with id "+id);
 			PreparedStatement stmt = con.prepareStatement("select * from survey where id=?");
 			stmt.setInt(1, id);
 
@@ -181,6 +182,8 @@ public class SurveyDAO {
 				}
 				
 				survey.setQuestionsList((ArrayList<Question>) questions);
+				
+				System.out.println("Got it: "+survey);
 
 				return survey;
 			}

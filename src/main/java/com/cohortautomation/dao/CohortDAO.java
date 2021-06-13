@@ -315,4 +315,22 @@ public class CohortDAO {
 		
 		return null;
 	}
+	
+	public static Cohort getMyCohort(String username) {
+		Connection con = DBConnection.getConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement("select cohort from user where username=?");
+			stmt.setString(1, username);
+			
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.next()) {
+				return CohortDAO.getCohort(result.getString(1));
+			}
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
