@@ -177,7 +177,8 @@ a {
 	  </p>
 	  
 	  <div class="p-5 mt-3" style="background-color: #C4C4C4;">
-        <form method="post">
+        <form action="/submit-survey" method="post">
+        	<input type="hidden" name="surveyId" value="${survey.getId() }">
         	<%
         		Survey survey = (Survey) request.getAttribute("survey");
         	
@@ -187,17 +188,24 @@ a {
         			out.print("<label style=\"font-size: 15px;\">"+question.getQuestionText()+"</label>");
         			
         			if(question.getQuestionType().equals("text")){
-        				out.print("<input type=\"text\" class=\"form-control\" placeholder=\"Answer here\">");
+        				out.print("<input type=\"text\" name=\""+ question.getQuestionType().substring(0,1)+question.getId() +"\" class=\"form-control\" placeholder=\"Answer here\" required>");
         			} else if(question.getQuestionType().equals("number")){
-        				out.print("<input type=\"number\" class=\"form-control\" placeholder=\"Answer here\">");
+        				out.print("<input type=\"number\" name=\""+ question.getQuestionType().substring(0,1)+question.getId() +"\" class=\"form-control\" placeholder=\"Answer here\" required>");
         			} else {
-        				out.print("<input type=\"date\" class=\"form-control\" placeholder=\"Answer here\">");
+        				out.print("<input type=\"date\" name=\""+ question.getQuestionType().substring(0,1)+question.getId() +"\" class=\"form-control\" placeholder=\"Answer here\" required>");
         			}
         		}
         	%>
             
             <div class="text-center mt-3">
-                <button type="submit" class="btn btn-primary">Submit Survey</button>
+	            <c:choose>
+				  <c:when test="${disable}">
+	                <button type="button" class="btn btn-primary disabled" data-toggle="tooltip" data-placement="top" title="Sorry, the survey response are closed now">Submit Survey</button>
+				  </c:when>
+				  <c:otherwise>
+	                <button type="submit" class="btn btn-primary">Submit Survey</button>	
+				  </c:otherwise>
+				</c:choose>
             </div>
         </form>
       </div>

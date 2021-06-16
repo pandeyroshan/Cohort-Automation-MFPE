@@ -86,11 +86,35 @@ public class SurveyController {
 			Survey survey = SurveyDAO.getSurvey(Integer.parseInt(id));
 			ModelAndView model = new ModelAndView("view-survey");
 			model.addObject("survey", survey);
-			System.out.println(survey);
+			
+			if(survey.getEndDateTime().isBefore(java.time.LocalDateTime.now())) {
+				model.addObject("disable", true);
+			} else {
+				model.addObject("disable", false);
+			}
 			return model;
 		} else {
 			session.setAttribute("nextUrl", "/view-survey/"+Integer.parseInt(id));
 			return new ModelAndView("redirect:/login");
 		}
+	}
+	
+	@RequestMapping(value = "/submit-survey", method = RequestMethod.POST)
+	public ModelAndView submitSurvey(@RequestParam Map<String, String> request, HttpSession session) {
+		if(UserUtility.isAuthenticated(session)) {
+			int surveyId = Integer.parseInt(request.get("surveyId"));
+			
+			for (Map.Entry<String,String> entry : request.entrySet())
+	            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			return new ModelAndView("redirect:/view-my-response/"+surveyId);
+		} else {
+			return new ModelAndView("redirect:/login");
+		}
+	}
+	
+	@RequestMapping(value = "/view-my-response/{surveyId}", method=RequestMethod.GET)
+	public ModelAndView surveyResponse(@PathVariable(value = "surveyid") String id, HttpSession session) {
+		ModelAndView model = new ModelAndView("my-response");
+		return model;
 	}
 }
