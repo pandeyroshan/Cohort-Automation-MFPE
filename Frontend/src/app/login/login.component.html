@@ -130,12 +130,12 @@
     <div class="main p-5">
       <h1 class="font-weight-light text-center mt-5">LOGIN PAGE</h1>
       <div class="p-5 mt-3" style="background-color: #C4C4C4;">
-        <form method="post" action="http://localhost:8080/login">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <label for="exampleInputEmail1" style="font-size: 15px;">Username</label>
-            <input type="text" class="form-control" name="username" placeholder="Username">
+            <input type="text" class="form-control" formControlName="username" name="username" placeholder="Username">
 
             <label for="exampleInputEmail1" style="font-size: 15px;">New Password</label>
-            <input type="password" class="form-control" name="password" placeholder="Password">
+            <input type="password" class="form-control" formControlName="password" name="password" placeholder="Password">
             
             <div class="text-center mt-3">
                 <button type="submit" class="btn btn-primary">Login Now</button>

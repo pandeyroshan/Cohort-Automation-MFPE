@@ -6,9 +6,11 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cohortautomation.beans.User;
@@ -159,5 +161,21 @@ public class AuthenticationController {
 		TokenDAO.deleteToken(email);
 		
 		return new ModelAndView("redirect:/login");
+	}
+	
+	@RequestMapping(value="/api-login", method=RequestMethod.POST)
+	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	public String loginAPI(@RequestParam Map<String, String> request) {
+		String username = request.get("username");
+		String password = request.get("password");
+		
+		if(UserDAO.validate(username, password)) {
+			System.out.println("SUCCESS");
+		} else {
+			System.out.println("FAILURE");
+		}
+		
+		return "true";
 	}
 }

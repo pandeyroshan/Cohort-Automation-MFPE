@@ -7,12 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.cohortautomation.beans.Cohort;
 import com.cohortautomation.beans.User;
 import com.cohortautomation.utilities.MailService;
 
 public class UserDAO {
 
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	public static boolean validate(String username, String password) {
 		Connection con = DBConnection.getConnection();
 		try {
