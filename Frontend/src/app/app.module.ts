@@ -5,23 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-
-import { HttpClientModule } from '@angular/common/http';
+import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ForgotPasswordComponent,
+    SetNewPasswordComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

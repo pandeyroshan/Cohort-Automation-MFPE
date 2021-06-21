@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page import="java.util.List, com.cohortautomation.beans.Attendance" language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -12,7 +12,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <title>Member Dashboard</title>
+    <title>Attendance Page</title>
     <style>
 body {
 	font-family: "Lato", sans-serif;
@@ -141,8 +141,8 @@ a {
       </div>
 
       <div class="text-left pl-5 pt-3 pr-5">
-        <p class="myNavLink" ><strong>Homepage</strong></p>
-        <p class="myNavLink" onclick="location.href='/attendance'">Attendance</p>
+        <p class="myNavLink" onclick="location.href='/'">Homepage</p>
+        <p class="myNavLink" onclick="location.href=''"><strong>Attendance</strong></p>
         <p class="myNavLink" onclick="location.href=''">Meetings</p>
         <p class="myNavLink" onclick="location.href=''">Surveys</p>
         <p class="myNavLink" onclick="location.href='/member-view-cohort'">My Cohort</p>
@@ -162,50 +162,54 @@ a {
         <a href="/logout"><img src="/resources/img/logout.png" class="mt-1" style="width: 15px; height: 15px;"></a>
       </div>
       
-      <p>
+      <small class="font-weight-light text-secondary">
+      	<span
+			style="font-size: 15px;">
+			 <a href="/">Home</a> /
+		</span> 
+		<span style="font-size: 15px;">
+			 My Attendance
+		</span>
+	  </small>
+	  <br>
+      
 	
-	
+	  <table class="table table-striped" style="font-size: 15px;">
+		  <thead>
+		    <tr>
+		      <th scope="col">S.No.</th>
+		      <th scope="col">Date</th>
+		      <th scope="col">Status</th>
+		      <th scope="col">Timestamp</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<%
+		  		List<Attendance> allAttendance = (List<Attendance>) request.getAttribute("attendances");
+		  		int i=1;
+		  		
+		  		for(Attendance attendance: allAttendance){
+		  			if(attendance.isPresent()){
+		  				out.print("<tr class=\"table-success\">");
+		  			} else {
+		  				out.print("<tr class=\"table-danger\">");
+		  			}
+		  			out.print("<th scope=\"row\">"+i+"</th>");
+		  			out.print("<td>"+ attendance.getForDate() +"</td>");
+		  			if(attendance.isPresent()){
+		  				out.print("<td class=\"table-success\">"+ "Present" +"</td>");
+		  			} else {
+		  				out.print("<td class=\"table-danger\">"+ "Absent" +"</td>");
+		  			}
+		  			out.print("<td>"+ attendance.getTimestamp() +"</td>");
+		  			out.print("</tr>");
+		  			i++;
+		  		}
+		  	%>
+		  </tbody>
+		</table>
 	  
-	  <div class="text-right">
-	  	<c:choose>
-		  <c:when test="${isPresent}">
-		  	<button class="btn btn-secondary disabled btn-sm" data-toggle="tooltip" data-placement="top" title="You are marked present for today">Mark me Present</button>
-		  </c:when>
-		  <c:otherwise>
-		  	<a href="/mark-present"><button class="btn btn-success btn-sm">Mark me Present</button></a>
-		  </c:otherwise>
-		</c:choose>
-      </div>
-      
-      <p class="cohort-label ml-3" style="font-size: 20px">Meetings</p>
-      <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
-			
-			<c:forEach var="meeting" items="${myMeetings}">
-	            <div class="pt-1 px-1 mr-2 bg-white text-center rounded" style="width: 150px;">
-	              <img src="/resources/img/round-table.png" class="img-responsive mt-2" style="width: 40px; height: 40px;">
-	              <p style="font-size: 15px;" class="text-center mt-2">${meeting.getMeetingName() }</p>
-	              <button onclick="location.href='/view-cohort?cohortID=${meeting.getMeetingName()}'" class="btn btn-success btn-sm mb-3">Join Now</button>
-	            </div>
-            </c:forEach>
-
-        </div>
-      </div>
-      
-      <p class="cohort-label ml-3" style="font-size: 20px">Surveys</p>
-      <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
-			
-			<c:forEach var="survey" items="${allSurveys}">
-	            <div class="pt-1 px-1 mr-2 bg-white text-center rounded" style="width: 150px;" data-toggle="tooltip" data-placement="right" title="${survey.getSurveyName()}">
-	              <img src="/resources/img/round-table.png" class="img-responsive mt-2" style="width: 40px; height: 40px;">
-	              <p style="font-size: 15px;" class="text-center mt-2">${survey.getSurveyName().substring(0,10) }...</p>
-	              <button onclick="location.href='/view-survey/${survey.getId()}'" class="btn btn-success btn-sm mb-3">Open</button>
-	            </div>
-            </c:forEach>
-
-        </div>
-      </div>
+	  
 
 	  <div class="text-right fixed-bottom mr-3">
 	  	<p class="font-weight-light" style="font-size:15px;">Last Login: ${user.getLastLogin() }</p>

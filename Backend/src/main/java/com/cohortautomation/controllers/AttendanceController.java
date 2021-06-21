@@ -26,4 +26,17 @@ public class AttendanceController {
 			return new ModelAndView("redirect:/login");
 		}
 	}
+	
+	@RequestMapping(value="/attendance", method=RequestMethod.GET)
+	public ModelAndView showMyAttendance(HttpSession session) {
+		if(UserUtility.isAuthenticated(session)) {
+			User user = (User) session.getAttribute("user");
+			ModelAndView model = new ModelAndView("view-attendance");
+			model.addObject("attendances", AttendanceDAO.getAllAttendance(user.getUsername()));
+			return model;
+		} else {
+			session.setAttribute("nextUrl", "/attendance");
+			return new ModelAndView("redirect:/login");
+		}
+	}
 }

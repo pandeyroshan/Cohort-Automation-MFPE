@@ -159,10 +159,12 @@
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\"><strong>Cohorts</strong></p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
 				} else {
+					out.print("");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
+			        out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Attendance</p>");
+			        out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
+			        out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
+			        out.print("<p class=\"myNavLink\" onclick=\"location.href='/member-view-cohort'\">My Cohort</p>");
 				}
 			%>
         

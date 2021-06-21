@@ -13,3 +13,15 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'app-reset-link-sent',
+  templateUrl: './reset-link-sent.component.html',
+  styleUrls: ['./forgot-password.component.css']
+})
+export class ResetLinkSent implements OnInit {
+  constructor(){ }
+
+  ngOnInit(): void {
+  }
+}

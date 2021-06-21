@@ -64,4 +64,18 @@ public class CohortController {
 			return new ModelAndView("redirect:/login");
 		}
 	}
+	
+	@RequestMapping(value="/member-view-cohort", method=RequestMethod.GET)
+	public ModelAndView memberViewCohort(HttpSession session) {
+		if(UserUtility.isAuthenticated(session)) {
+			User user = (User) session.getAttribute("user");
+			ModelAndView model = new ModelAndView("member-my-cohort");
+			model.addObject("cohort", CohortDAO.getMyCohort(user.getUsername()));
+			model.addObject("allMembers", CohortDAO.getAllMembersForCohort(CohortDAO.getMyCohort(user.getUsername()).getName()));
+			return model;
+		} else {
+			session.setAttribute("nextUrl", "/member-view-cohort");
+			return new ModelAndView("redirect:/login");
+		}
+	}
 }

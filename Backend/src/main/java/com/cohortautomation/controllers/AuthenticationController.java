@@ -131,7 +131,7 @@ public class AuthenticationController {
 			e.printStackTrace();
 		}
 		
-		return "link-sent";
+		return "redirect:http://localhost:4200/link-sent";
 	}
 	
 	@RequestMapping(value="/reset-password", method=RequestMethod.GET)
@@ -161,21 +161,5 @@ public class AuthenticationController {
 		TokenDAO.deleteToken(email);
 		
 		return new ModelAndView("redirect:/login");
-	}
-	
-	@RequestMapping(value="/api-login", method=RequestMethod.POST)
-	@ResponseBody
-	@CrossOrigin(origins = "*", allowedHeaders = "*")
-	public String loginAPI(@RequestParam Map<String, String> request) {
-		String username = request.get("username");
-		String password = request.get("password");
-		
-		if(UserDAO.validate(username, password)) {
-			System.out.println("SUCCESS");
-		} else {
-			System.out.println("FAILURE");
-		}
-		
-		return "true";
 	}
 }

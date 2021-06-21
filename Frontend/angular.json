@@ -1,12 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "efd6e848-808a-4e33-a70a-ee588585c2d1"
+    "analytics": "74bde20e-f4e4-407b-bf7a-5dc2ab1ea5b6"
   },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cohort-automation-frontend": {
+    "Frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/cohort-automation-frontend",
+            "outputPath": "dist/Frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "cohort-automation-frontend:build:production"
+              "browserTarget": "Frontend:build:production"
             },
             "development": {
-              "browserTarget": "cohort-automation-frontend:build:development"
+              "browserTarget": "Frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cohort-automation-frontend:build"
+            "browserTarget": "Frontend:build"
           }
         },
         "test": {
@@ -105,5 +105,5 @@
       }
     }
   },
-  "defaultProject": "cohort-automation-frontend"
+  "defaultProject": "Frontend"
 }

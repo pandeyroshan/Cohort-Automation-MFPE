@@ -1,35 +1,36 @@
 package com.cohortautomation.beans;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Attendance {
-	private User user;
-	private Date forDate;
+	private String username;
+	private LocalDate forDate;
 	private boolean isPresent;
 	private LocalDateTime timestamp;
 
-	public Attendance(User user, Date forDate, boolean isPresent, LocalDateTime timestamp) {
+	public Attendance(String username, LocalDate forDate, boolean isPresent, LocalDateTime timestamp) {
 		super();
-		this.user = user;
+		this.username = username;
 		this.forDate = forDate;
 		this.isPresent = isPresent;
 		this.timestamp = timestamp;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUser() {
+		return username;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(String username) {
+		this.username = username;
 	}
 
-	public Date getForDate() {
+	public LocalDate getForDate() {
 		return forDate;
 	}
 
-	public void setForDate(Date forDate) {
+	public void setForDate(LocalDate forDate) {
 		this.forDate = forDate;
 	}
 
@@ -51,7 +52,7 @@ public class Attendance {
 
 	@Override
 	public String toString() {
-		return "Attendance [user=" + user + ", forDate=" + forDate + ", isPresent=" + isPresent + ", timestamp="
+		return "Attendance [user=" + username + ", forDate=" + forDate + ", isPresent=" + isPresent + ", timestamp="
 				+ timestamp + "]";
 	}
 
