@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cohortautomation.beans.Meeting;
 import com.cohortautomation.beans.User;
+import com.cohortautomation.dao.CohortDAO;
 import com.cohortautomation.dao.MeetingDAO;
 import com.cohortautomation.utilities.UserUtility;
 
@@ -54,7 +55,12 @@ public class MeetingController {
 			List<Meeting> myMeeting = MeetingDAO.getMyMeeting(user.getUsername());
 			
 			ModelAndView model = new ModelAndView("my-meetings");
-			model.addObject("myMeeting", myMeeting);
+			
+			if(user.isMember()) {
+				model.addObject("myMeeting", MeetingDAO.getAllMeetingForCohort(CohortDAO.getMyCohort(user.getUsername()).getName()));
+			} else {
+				model.addObject("myMeeting", myMeeting);
+			}
 			return model;
 		} else {
 			session.setAttribute("nextUrl", "/my-meetings");

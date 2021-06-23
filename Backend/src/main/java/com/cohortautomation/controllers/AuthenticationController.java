@@ -6,11 +6,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cohortautomation.beans.User;
@@ -161,5 +159,16 @@ public class AuthenticationController {
 		TokenDAO.deleteToken(email);
 		
 		return new ModelAndView("redirect:/login");
+	}
+	
+	@RequestMapping(value="/my-profile", method=RequestMethod.GET)
+	public ModelAndView myProfile(HttpSession session){
+		if(UserUtility.isAuthenticated(session)) {
+			ModelAndView model = new ModelAndView("profile");
+			return model;
+		} else {
+			session.setAttribute("nextUrl", "/my-profile");
+			return new ModelAndView("redirect:/login");
+		}
 	}
 }

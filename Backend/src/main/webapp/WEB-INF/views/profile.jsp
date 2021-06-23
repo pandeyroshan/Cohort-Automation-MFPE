@@ -1,8 +1,8 @@
-<%@ page
-	import="com.cohortautomation.beans.User, com.cohortautomation.beans.Meeting"
+<%@ page import="java.util.List, com.cohortautomation.beans.User"
 	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,8 +16,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
-
-<title>My Meetings</title>
+<title>Profile Page</title>
 <style>
 body {
 	font-family: "Lato", sans-serif;
@@ -129,7 +128,6 @@ p.cohort-label {
 
 a {
 	text-decoration: none;
-	cursor: pointer;
 }
 </style>
 </head>
@@ -198,21 +196,7 @@ a {
 
 		<div class="text-center p-3 myFooter"
 			style="background-color: rgba(0, 0, 0, 0.2);">
-			<%
-				if (user.isAdmin()) {
-					out.print("<p class=\"mb-2\">Admin Dashboard</p>");
-				} else if (user.isSME()) {
-					out.print("<p class=\"mb-2\">SME Dashboard</p>");
-				} else if (user.isMentor()) {
-					out.print("<p class=\"mb-2\">Mentor Dashboard</p>");
-				} else if (user.isCoach()) {
-					out.print("<p class=\"mb-2\">Coach Dashboard</p>");
-				} else if (user.isTrainer()) {
-					out.print("<p class=\"mb-2\">Trainer Dashboard</p>");
-				} else {
-					out.print("<p class=\"mb-2\">Member Dashboard</p>");
-				}
-			%>
+			<p class="mb-2">Member Dashboard</p>
 		</div>
 	</div>
 
@@ -224,29 +208,31 @@ a {
 				style="width: 15px; height: 15px;"></a>
 		</div>
 
-		<!-- Breadcrumb -->
-		<small class="font-weight-light text-secondary"> <span
+		<small class="font-weight-light text-secondary"
+			style="margin: 0; padding: 0;"> <span
 			style="font-size: 15px;"> <a href="/">Home</a> /
-		</span> <span style="font-size: 15px;"> My Meetings </span>
+		</span> <span style="font-size: 15px;"> My Profile</span>
 		</small>
-
-		<div class="row mt-4 ml-3">
-
-			<c:forEach var="meeting" items="${myMeeting}">
-				<div class="pt-1 px-1 mr-2 bg-secondary text-center rounded"
-					style="width: 150px;">
-					<img src="/resources/img/round-table.png"
-						class="img-responsive mt-2" style="width: 40px; height: 40px;">
-					<p style="font-size: 15px;" class="text-center mt-2">${meeting.getMeetingName() }</p>
-					<button onclick="location.href='${meeting.getMeetingURL()}'"
-						class="btn btn-success btn-sm mb-3">Join Now</button>
-				</div>
-			</c:forEach>
-
+		
+		<div class="text-center">
+			<img src="/resources/img/profile-user.png" style="width:100px; height:100px;" class="mb-2">
+			<p class="font-weight-light" style="margin:0; padding:0;">${user.getFullName() }</p>
+			<p class="text-secondary font-weight-light" style="font-size: 20px;">Employee ID - ${user.getUsername() }</p>
+			<hr>
+		</div>
+		<div>
+			<p style="font-size: 20px;">Email Address: ${user.getPersonalEmail() }
 		</div>
 
 
+
+
+		<div class="text-right fixed-bottom mr-3">
+			<p class="font-weight-light" style="font-size: 15px;">Last Login:
+				${user.getLastLogin() }</p>
+		</div>
 	</div>
+
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

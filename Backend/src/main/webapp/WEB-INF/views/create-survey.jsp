@@ -155,44 +155,48 @@ a {
 		<div class="text-left pl-5 pt-3 pr-5">
 			<%
 				User user = (User) session.getAttribute("user");
-				
-				if(user.isAdmin()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
+
+				if (user.isAdmin()) {
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-cohort'\">Cohorts</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-sme'\">SMEs</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-mentor'\">Mentors</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-coach'\">Coaches</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-trainer'\">Trainer</p>");
-				} else if(user.isSME()){
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/admin-change-password'\">Change Password</p>");
+				} else if (user.isSME()) {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\">Cohorts</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
-				} else if(user.isMentor()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
-				} else if(user.isCoach()){
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-surveys'\">Surveys</p>");
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/change-password'\">Change Password</p>");
+				} else if (user.isMentor()) {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\"><strong>Cohorts</strong></p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
-				} else if(user.isTrainer()){
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-surveys'\">Surveys</p>");
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/change-password'\">Change Password</p>");
+				} else if (user.isCoach()) {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\">Cohorts</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\"><strong>Cohorts</strong></p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-surveys'\">Surveys</p>");
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/change-password'\">Change Password</p>");
+				} else if (user.isTrainer()) {
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\"><strong>Cohorts</strong></p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/change-password'\">Change Password</p>");
 				} else {
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
+					out.print("<p>NOT AUTHORIZED</p>");
 				}
 			%>
-			<hr>
-			<p class="myNavLink">Change Password</p>
-			<p class="myNavLink">My Profile</p>
+			<p class="myNavLink" onclick="location.href='/my-profile'">My Profile</p>
 		</div>
 
 		<div class="text-center p-3 myFooter"

@@ -1,5 +1,5 @@
 <%@ page
-	import="com.cohortautomation.beans.User, com.cohortautomation.beans.Meeting"
+	import="com.cohortautomation.beans.User, com.cohortautomation.beans.Survey, java.util.*"
 	language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -16,8 +16,10 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
+	
+	<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
 
-<title>My Meetings</title>
+<title>Survey Response</title>
 <style>
 body {
 	font-family: "Lato", sans-serif;
@@ -227,26 +229,108 @@ a {
 		<!-- Breadcrumb -->
 		<small class="font-weight-light text-secondary"> <span
 			style="font-size: 15px;"> <a href="/">Home</a> /
-		</span> <span style="font-size: 15px;"> My Meetings </span>
+		</span> <span style="font-size: 15px;"> View Survey Response -
+				${survey.getSurveyName() }</span>
 		</small>
-
-		<div class="row mt-4 ml-3">
-
-			<c:forEach var="meeting" items="${myMeeting}">
-				<div class="pt-1 px-1 mr-2 bg-secondary text-center rounded"
-					style="width: 150px;">
-					<img src="/resources/img/round-table.png"
-						class="img-responsive mt-2" style="width: 40px; height: 40px;">
-					<p style="font-size: 15px;" class="text-center mt-2">${meeting.getMeetingName() }</p>
-					<button onclick="location.href='${meeting.getMeetingURL()}'"
-						class="btn btn-success btn-sm mb-3">Join Now</button>
-				</div>
-			</c:forEach>
-
+		<hr>
+		<div class="text-right">
+			<button class="btn btn-success btn-sm" onclick="exportReportToExcel(this)">Export to Excel</button>
 		</div>
 
+		<p style="font-size: 20px;">Total Recorded Response -
+			${totalResponse }</p>
+
+		<%
+			HashMap<String, HashMap<String, String>> allSurveyResponse = (HashMap<String, HashMap<String, String>>) request
+					.getAttribute("allSurveyResponse");
+
+			int i = 0;
+			for (Map.Entry<String, HashMap<String, String>> entry : allSurveyResponse.entrySet()) {
+				String username = entry.getKey();
+				HashMap<String, String> surveyResponseOfUser = entry.getValue();
+				i++;
+
+				out.print("<a data-toggle=\"collapse\" href=\"#collapseExample" + i
+						+ "\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseExample\"><p class=\"font-weight-light\" style=\"font-size: 20px;\">Response "
+						+ i + "</a> - By " + username + "</p>");
+
+				out.print("<div class=\"collapse\" id=\"collapseExample"+i+"\">");
+				out.print("<div class=\"card card-body\">");
+				
+				int j=1;
+				
+				for(Map.Entry<String, String> entry1 : surveyResponseOfUser.entrySet()) {
+					out.print("<p style=\"font-size: 18px; margin:0; padding:0\" class='font-weight-light'>Question "+j+": "+entry1.getKey()+"</p>");
+					out.print("<p style=\"font-size: 18px;\" class='font-weight-light'>Answer: "+entry1.getValue()+"</p>");
+					j++;
+				}
+				out.print("</div>");
+				out.print("</div>");
+
+			}
+		%>
+		
+		<div style="visibility: hidden">
+			<table>
+				<thead>
+					<tr>
+						<%
+							out.print("<th>Employee ID</th>");
+						
+							int a = 1;
+						
+							for (Map.Entry<String, HashMap<String, String>> entry : allSurveyResponse.entrySet()) {
+								
+								if(a==2) break;
+								
+								String username = entry.getKey();
+								HashMap<String, String> surveyResponseOfUser = entry.getValue();
+								
+								for(Map.Entry<String, String> entry1 : surveyResponseOfUser.entrySet()) {
+									out.print("<th>"+ entry1.getKey() +"</th>");
+								}
+								
+								a++;
+							}
+						%>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for (Map.Entry<String, HashMap<String, String>> entry : allSurveyResponse.entrySet()) {
+							
+							out.print("<tr>");
+
+							String username = entry.getKey();
+							
+							out.print("<td>"+ username +"</td>");
+							
+							HashMap<String, String> surveyResponseOfUser = entry.getValue();
+							
+							for(Map.Entry<String, String> entry1 : surveyResponseOfUser.entrySet()) {
+								out.print("<td>"+ entry1.getValue() +"</td>");
+							}
+							
+							out.print("</tr>");
+						}
+					%>
+				</tbody>
+			</table>
+		</div>
 
 	</div>
+	
+	<script>
+		function exportReportToExcel() {
+			let table = document.getElementsByTagName("table"); // you can use document.getElementById('tableId') as well by providing id to the table tag
+			TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
+				name : `${survey.getSurveyName()}.xlsx`, // fileName you could use any name
+				sheet : {
+					name : 'Sheet 1' // sheetName
+				}
+			});
+		}
+	</script>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

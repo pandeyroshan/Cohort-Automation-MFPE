@@ -149,58 +149,67 @@ a {
 		<div class="text-left pl-5 pt-3 pr-5">
 			<%
 				User user = (User) session.getAttribute("user");
-				
-				if(user.isAdmin()){
+
+				if (user.isAdmin()) {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-cohort'\">Cohorts</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-sme'\">SMEs</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-mentor'\">Mentors</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-coach'\">Coaches</p>");
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/all-trainer'\">Trainer</p>");
-				} else if(user.isSME()){
+					out.print("<hr>");
+					out.print(
+							"<p class=\"myNavLink\" onclick=\"location.href='/admin-change-password'\">Change Password</p>");
+				} else if (user.isSME()) {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Survey</p>");
-				} else if(user.isMentor()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Survey</p>");
-				} else if(user.isCoach()){
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\">Cohorts</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-surveys'\">Surveys</p>");
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/change-password'\">Change Password</p>");
+				} else if (user.isMentor()) {
 					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\"><strong>Cohorts</strong></p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href=''\">Surveys</p>");
-				} else if(user.isTrainer()){
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Survey</p>");
+					out.print(
+							"<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\"><strong>Cohorts</strong></p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-surveys'\">Surveys</p>");
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/change-password'\">Change Password</p>");
+				} else if (user.isCoach()) {
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
+					out.print(
+							"<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\"><strong>Cohorts</strong></p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-surveys'\">Surveys</p>");
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/change-password'\">Change Password</p>");
+				} else if (user.isTrainer()) {
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Homepage</p>");
+					out.print(
+							"<p class=\"myNavLink\" onclick=\"location.href='/my-cohorts'\"><strong>Cohorts</strong></p>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-meetings'\">Meetings</p>");
+					out.print("<hr>");
+					out.print("<p class=\"myNavLink\" onclick=\"location.href='/change-password'\">Change Password</p>");
 				} else {
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='\">Homepage</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/my-cohort'\">Cohorts</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Meetings</p>");
-					out.print("<p class=\"myNavLink\" onclick=\"location.href='/'\">Survey</p>");
+					out.print("<p>NOT AUTHORIZED</p>");
 				}
 			%>
-			<hr>
-			<p class="myNavLink">Change Password</p>
-			<p class="myNavLink">My Profile</p>
+			<p class="myNavLink" onclick="location.href='/my-profile'">My
+				Profile</p>
 		</div>
 
 		<div class="text-center p-3 myFooter"
 			style="background-color: rgba(0, 0, 0, 0.2);">
 			<%
-				if(user.isAdmin()){
+				if (user.isAdmin()) {
 					out.print("<p class=\"mb-2\">Admin Dashboard</p>");
-				} else if(user.isSME()) {
+				} else if (user.isSME()) {
 					out.print("<p class=\"mb-2\">SME Dashboard</p>");
-				} else if(user.isMentor()) {
+				} else if (user.isMentor()) {
 					out.print("<p class=\"mb-2\">Mentor Dashboard</p>");
-				} else if(user.isCoach()) {
+				} else if (user.isCoach()) {
 					out.print("<p class=\"mb-2\">Coach Dashboard</p>");
-				} else if(user.isTrainer()) {
+				} else if (user.isTrainer()) {
 					out.print("<p class=\"mb-2\">Trainer Dashboard</p>");
 				} else {
 					out.print("<p class=\"mb-2\">Member Dashboard</p>");
@@ -222,26 +231,42 @@ a {
 			style="font-size: 15px;"> <a href="/">Home</a> /
 		</span> <span style="font-size: 15px;"> My Surveys</span>
 		</small>
-		
+
 		<c:forEach var="survey" items="${mySurvey}">
 			<div class="container-fluid py-2">
-		        <div class="d-flex row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
-		        	<div class="col-sm-1">
-		        		<img src="/resources/img/survey.png" class="img-responsive mt-2" style="width: 70px; height: 70px;">
-		        	</div>
-		        	<div class="col-sm-8">
-		        		<div>
-		        			<p style="font-size: 20px; margin:0; padding:0;" class="font-weight-light">${survey.getSurveyName()}</p>
-		        			<hr style="margin: 0; padding: 0;">
-		        		</div>
-		        	</div>
-		        	<div class="col-sm-3 text-center">
-		        		<button class="btn btn-success border px-5 py-2">Show Response</button>
-		        	</div>
-		        </div>
-	      	</div>
-      	</c:forEach>
-		
+				<div class="d-flex row flex-nowrap scrollmenu pt-2 pb-2 pl-2 pr-2">
+					<div class="col-sm-1">
+						<img src="/resources/img/survey.png" class="img-responsive mt-2"
+							style="width: 70px; height: 70px;">
+					</div>
+					<div class="col-sm-8">
+						<div>
+							<p style="font-size: 20px; margin: 0; padding: 0;"
+								class="font-weight-light">${survey.getSurveyName()}</p>
+							<hr style="margin: 0; padding: 0;">
+							<p style="font-size: 15px; margin: 0; padding: 0;">Deadline:
+								${survey.getEndDateTime() }</p>
+
+						</div>
+					</div>
+					<div class="col-sm-3 text-center">
+						<c:choose>
+							<c:when test="${user.isMember()}">
+								<button onclick="location.href='/view-survey/${survey.getId()}'"
+									class="btn btn-success border px-5 py-2">Open Now</button>
+							</c:when>
+							<c:otherwise>
+								<button
+									onclick="location.href='/show-responses/${survey.getId()}'"
+									class="btn btn-success border px-5 py-2">View
+									Responses</button>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+
 
 	</div>
 

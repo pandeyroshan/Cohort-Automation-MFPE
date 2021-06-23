@@ -11,7 +11,9 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
+	
+	
+	<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
     <title>Attendance Page</title>
     <style>
 body {
@@ -143,8 +145,8 @@ a {
       <div class="text-left pl-5 pt-3 pr-5">
         <p class="myNavLink" onclick="location.href='/'">Homepage</p>
         <p class="myNavLink" onclick="location.href=''"><strong>Attendance</strong></p>
-        <p class="myNavLink" onclick="location.href=''">Meetings</p>
-        <p class="myNavLink" onclick="location.href=''">Surveys</p>
+        <p class="myNavLink" onclick="location.href='/my-meetings'">Meetings</p>
+        <p class="myNavLink" onclick="location.href='/my-surveys'">Surveys</p>
         <p class="myNavLink" onclick="location.href='/member-view-cohort'">My Cohort</p>
         <hr>
         <p class="myNavLink" onclick="location.href='/change-password'">Change Password</p>
@@ -171,7 +173,10 @@ a {
 			 My Attendance
 		</span>
 	  </small>
-	  <br>
+	  
+	  <div class="text-right">
+			<button class="btn btn-success btn-sm" onclick="exportReportToExcel(this)">Export to Excel</button>
+		</div>
       
 	
 	  <table class="table table-striped" style="font-size: 15px;">
@@ -215,6 +220,17 @@ a {
 	  	<p class="font-weight-light" style="font-size:15px;">Last Login: ${user.getLastLogin() }</p>
 	  </div>
     </div>
+    <script>
+		function exportReportToExcel() {
+			let table = document.getElementsByTagName("table"); // you can use document.getElementById('tableId') as well by providing id to the table tag
+			TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
+				name : `${user.getUsername()}.xlsx`, // fileName you could use any name
+				sheet : {
+					name : 'Sheet 1' // sheetName
+				}
+			});
+		}
+	</script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>

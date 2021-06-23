@@ -11,6 +11,7 @@ import java.util.List;
 import com.cohortautomation.beans.Answer;
 import com.cohortautomation.beans.Question;
 import com.cohortautomation.beans.Survey;
+import com.cohortautomation.beans.User;
 
 public class SurveyDAO {
 	public static boolean createSurvey(Survey survey) {
@@ -98,7 +99,7 @@ public class SurveyDAO {
 				allSurvey.add(survey);
 			}
 			
-			System.out.println(allSurvey);
+			//(allSurvey);
 
 			return allSurvey;
 		} catch (SQLException e) {
@@ -150,7 +151,7 @@ public class SurveyDAO {
 	public static Survey getSurvey(int id) {
 		Connection con = DBConnection.getConnection();
 		try {
-			System.out.println("INSIDE DAO: Searching for Survey with id "+id);
+			//("INSIDE DAO: Searching for Survey with id "+id);
 			PreparedStatement stmt = con.prepareStatement("select * from survey where id=?");
 			stmt.setInt(1, id);
 
@@ -185,7 +186,7 @@ public class SurveyDAO {
 				
 				survey.setQuestionsList((ArrayList<Question>) questions);
 				
-				System.out.println("Got it: "+survey);
+				//("Got it: "+survey);
 
 				return survey;
 			}
@@ -302,9 +303,12 @@ public class SurveyDAO {
 		HashMap<String, String> response = new HashMap<>();
 		
 		try {
-			PreparedStatement stmt = con.prepareStatement("select answer_text from answer where question_id = ?");
+			PreparedStatement stmt = con.prepareStatement("select answer_text from answer where question_id = ? and survey_id = ? and answered_by_id = ?");
 			
 			ArrayList<Question> questionsList = SurveyDAO.getSurvey(surveyId).getQuestionsList();
+			
+			stmt.setInt(2, surveyId);
+			stmt.setInt(3, Integer.parseInt(username));
 			
 			for(Question question: questionsList) {
 				stmt.setInt(1, question.getId());
@@ -321,5 +325,26 @@ public class SurveyDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static HashMap<String, HashMap<String, String>> getAllSurveyResponse(int surveyId)
+	{
+		HashMap<String, HashMap<String, String>> allResponse = new HashMap<String, HashMap<String, String>>();
+		
+		Survey survey = SurveyDAO.getSurvey(surveyId);
+		String cohort = survey.getCohort();
+		
+		List<User> allMembersForCohort = CohortDAO.getAllMembersForCohort(cohort);
+		
+		for(User user: allMembersForCohort) {
+			
+			HashMap<String, String> surveyResponse = SurveyDAO.getSurveyResponse(surveyId, user.getUsername());
+			
+			if(surveyResponse.size()>0) {
+				allResponse.put(user.getUsername(), surveyResponse);
+			}
+		}
+		
+		return allResponse;
 	}
 }
