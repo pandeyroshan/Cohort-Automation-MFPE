@@ -105,7 +105,6 @@ public class AttendanceDAO {
 			ResultSet result = stmt.executeQuery();
 
 			if (result.next()) {
-				System.out.println(result.getInt(2));
 				return true;
 			} else {
 				return false;

@@ -32,6 +32,7 @@ public class AdminController {
 	@RequestMapping("/delete-cohort")
 	public ModelAndView deleteACohort(@RequestParam Map<String, String> request, HttpSession session) {
 		String cohortId = request.get("cohortId");
+		System.out.println("To be Deleted : "+ cohortId);
 		CohortDAO.deleteCohort(cohortId);
 		ModelAndView model = new ModelAndView("admin-all-cohort");
 		model.addObject("allCohorts", CohortDAO.getAllCohorts());
@@ -293,7 +294,7 @@ public class AdminController {
 	public ModelAndView deleteCohort(@RequestParam Map<String, String> request, HttpSession session) {
 		String cohortId = request.get("cohortId");
 		CohortDAO.deleteCohort(cohortId);
-
+		System.out.println("Delete Cohort: "+cohortId);
 		ModelAndView model = new ModelAndView("redirect:/all-cohort");
 		return model;
 	}

@@ -235,7 +235,7 @@ a {
 				Cohort cohort = (Cohort) request.getAttribute("cohort");
 				if(user.isAdmin()){
 					out.print("<button class=\"btn btn-success mr-3\" data-toggle=\"modal\" data-target=\"#exampleModal\">Edit</button>");
-					out.print("<button onclick=\"location.href='/delete-cohort?cohortId=${cohort.getName()}'\" class=\"btn btn-danger\">Delete</button>");
+					out.print("<button onclick=\"location.href='/delete-cohort?cohortId="+cohort.getName()+"'\" class=\"btn btn-danger\">Delete</button>");
 				} else if(user.isSME()){
 					out.print("<button data-toggle=\"modal\" data-target=\"#createMeetingModal\" class=\"btn btn-success btn-sm mr-3\">Create Meeting</button>");
 					out.print("<a href=\"/create-survey?for="+cohort.getName()+"\"><button class=\"btn btn-success btn-sm mr-3\">Create Survey</button></a>");

@@ -28,13 +28,9 @@ public class Meeting {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public String getMeetingName() {
 		return meetingName;
@@ -94,9 +90,7 @@ public class Meeting {
 
 	@Override
 	public String toString() {
-		return "Meeting [meetingName=" + meetingName + ", meetingAgenda=" + meetingAgenda + ", meetingURL=" + meetingURL
-				+ ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime + ", cohortID=" + cohortID + "]";
+		return "Meeting [id=" + id + ", meetingName=" + meetingName + ", meetingAgenda=" + meetingAgenda
+				+ ", meetingURL=" + meetingURL + ", cohortID=" + cohortID + "]";
 	}
-	
-	
 }
